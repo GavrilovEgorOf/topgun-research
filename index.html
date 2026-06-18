@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="TopGun Research — исследовательский стенд коэволюции боевых агентов в 3D-арене методом эволюционных стратегий."
+    />
+    <title>TopGun Research</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600&family=Syne:wght@500;600;700;800&family=Unbounded:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/landing.css" />
+  </head>
+  <body>
+    <div class="ambient" aria-hidden="true">
+      <div class="ambient__radar"></div>
+      <div class="ambient__grid"></div>
+      <div class="ambient__scan"></div>
+    </div>
+
+    <header class="site-header">
+      <a class="logo" href="/">
+        <span class="logo__icon" aria-hidden="true">◈</span>
+        TopGun<span class="logo__sub">Research</span>
+      </a>
+      <nav class="site-nav" aria-label="Разделы">
+        <a href="#problem"><span class="nav-idx">01</span>Задача</a>
+        <a href="#method"><span class="nav-idx">02</span>Метод</a>
+        <a href="#environment"><span class="nav-idx">03</span>Среда</a>
+        <a href="#protocol"><span class="nav-idx">04</span>Протокол</a>
+        <a href="/theory_for_uni/"><span class="nav-idx">05</span>Теория</a>
+      </nav>
+      <div class="header-actions">
+        <a class="header-cta header-cta--ghost" href="/demo.html">Demo</a>
+        <a class="header-cta" href="/research.html">
+          <span class="cta-dot" aria-hidden="true"></span>
+          Стенд
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="top">
+        <div class="hero__status" aria-hidden="true">
+          <span>ES v2.0</span>
+          <span class="hero__status-sep">·</span>
+          <span>COEVOLUTION ACTIVE</span>
+          <span class="hero__status-sep">·</span>
+          <span>48×2 POP</span>
+        </div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="hero-kicker">
+              <span class="kicker-bracket">[</span>
+              исследовательский стенд
+              <span class="kicker-bracket">]</span>
+            </p>
+            <h1 class="hero-title">
+              Коэволюция<br />
+              <span class="title-accent">без градиентов</span>
+            </h1>
+            <p class="hero-lead">
+              Два нейросетевых агента сражаются в процедурной 3D-арене. Их веса
+              оптимизируются эволюционными стратегиями — методом, который
+              работает там, где симулятор не дифференцируем, а награда приходит
+              редко и с задержкой.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="/demo.html">
+                <span class="btn-icon" aria-hidden="true">▶</span>
+                Открыть demo
+              </a>
+              <a class="btn btn-secondary" href="/research.html">
+                Live-стенд
+              </a>
+              <a class="btn btn-ghost" href="#method">Почему ES, а не RL</a>
+            </div>
+            <dl class="hero-stats">
+              <div class="stat-cell">
+                <dt>Популяция</dt>
+                <dd><span class="stat-val">48</span><span class="stat-unit">×2</span></dd>
+              </div>
+              <div class="stat-cell">
+                <dt>Наблюдения</dt>
+                <dd><span class="stat-val">28</span><span class="stat-arrow">→</span><span class="stat-val">5</span></dd>
+              </div>
+              <div class="stat-cell">
+                <dt>Матч</dt>
+                <dd><span class="stat-val">20</span><span class="stat-unit">с</span></dd>
+              </div>
+            </dl>
+          </div>
+
+          <figure class="hero-visual" aria-label="Схема арены сверху">
+            <div class="hud-frame">
+              <span class="hud-corner hud-corner--tl" aria-hidden="true"></span>
+              <span class="hud-corner hud-corner--tr" aria-hidden="true"></span>
+              <span class="hud-corner hud-corner--bl" aria-hidden="true"></span>
+              <span class="hud-corner hud-corner--br" aria-hidden="true"></span>
+              <div class="hud-frame__label hud-frame__label--top">ARENA FEED · TOP-DOWN</div>
+              <canvas id="arena-canvas" width="480" height="480"></canvas>
+              <div class="hud-frame__label hud-frame__label--bottom">
+                <span class="agent-tag blue">Синий</span>
+                <span class="agent-tag red">Красный</span>
+                · 12×12 PROC
+              </div>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section" id="problem">
+        <div class="section-inner reveal">
+          <span class="section-watermark" aria-hidden="true">01</span>
+          <header class="section-head">
+            <span class="section-num">01</span>
+            <div>
+              <h2>Постановка задачи</h2>
+              <p class="section-deck">
+                Среда, в которой классическое обучение с подкреплением сталкивается
+                с системными ограничениями.
+              </p>
+            </div>
+          </header>
+
+          <div class="two-col">
+            <div class="prose">
+              <p>
+                Агент получает <strong>28 нормализованных наблюдений</strong>:
+                собственную позицию, здоровье, направление взгляда, относительное
+                положение противника (если виден), ближайшее оружие, лучи до стен и
+                статус вооружения. Действия — дискретные: вперёд, стрейф, выстрел.
+              </p>
+              <p>
+                Карта генерируется по seed: стены, три типа оружия (пистолет, лук,
+                катана), частичная наблюдаемость через поле зрения 72° и
+                ray-casting. Матч длится 20 секунд или до первого убийства.
+              </p>
+              <p>
+                Fitness — скалярная сумма наград и штрафов за весь эпизод. Это
+                <em>не</em> дифференцируемая функция потерь: внутри симуляции —
+                столкновения, дискретные попадания, таймауты.
+              </p>
+            </div>
+
+            <ul class="constraint-list">
+              <li>
+                <span class="constraint-icon" aria-hidden="true">∂</span>
+                <div>
+                  <strong>Нет градиента через среду</strong>
+                  <p>
+                    Симулятор написан на чистом JS: физика, LOS, урон. Нельзя
+                    вызвать <code>loss.backward()</code>.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span class="constraint-icon" aria-hidden="true">Δt</span>
+                <div>
+                  <strong>Разреженная награда</strong>
+                  <p>
+                    Убийство (+12) и поражение (−12) случаются один раз за
+                    эпизод. Между ними — мелкие shaping-бонусы за исследование и
+                    подбор оружия.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span class="constraint-icon" aria-hidden="true">∞</span>
+                <div>
+                  <strong>Коэволюция</strong>
+                  <p>
+                    Противник тоже учится. Ландшафт fitness нестационарен: то,
+                    что работало в поколении N, может провалиться в N+1.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="method">
+        <div class="section-inner reveal">
+          <span class="section-watermark" aria-hidden="true">02</span>
+          <header class="section-head">
+            <span class="section-num">02</span>
+            <div>
+              <h2>Почему эволюционные стратегии</h2>
+              <p class="section-deck">
+                ES трактует веса нейросети как геном и оптимизирует их через
+                популяционный поиск — без backprop через среду.
+              </p>
+            </div>
+          </header>
+
+          <div class="comparison-wrap">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th scope="col">Критерий</th>
+                  <th scope="col">Policy Gradient / PPO</th>
+                  <th scope="col" class="col-chosen">Evolution Strategies</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Дифференцируемость среды</th>
+                  <td>Требует суррогатного градиента или модели</td>
+                  <td class="col-chosen">Не требуется — только scalar fitness</td>
+                </tr>
+                <tr>
+                  <th scope="row">Разреженные награды</th>
+                  <td>Нужен careful reward shaping и value baseline</td>
+                  <td class="col-chosen">Популяция усредняет шум; элита сохраняет удачные мутации</td>
+                </tr>
+                <tr>
+                  <th scope="row">Параллелизм</th>
+                  <td>Зависит от on-policy сэмплирования</td>
+                  <td class="col-chosen">~96 независимых матчей на worker threads</td>
+                </tr>
+                <tr>
+                  <th scope="row">Интерпретируемость</th>
+                  <td>Градиенты в скрытых слоях</td>
+                  <td class="col-chosen">Прямой A/B весов между поколениями</td>
+                </tr>
+                <tr>
+                  <th scope="row">Масштаб сети</th>
+                  <td>Миллионы параметров</td>
+                  <td class="col-chosen">~2.5K параметров — ES эффективен на малых MLP</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="algorithm-block">
+            <div class="algorithm-text">
+              <h3>Алгоритм одного поколения</h3>
+              <ol class="algorithm-steps">
+                <li>
+                  Оценить все 48 геномов популяции в матчах против
+                  <em>чемпиона</em> противоположной стороны (случайный seed карты).
+                </li>
+                <li>
+                  Отранжировать по fitness. Топ-8 — элита, переходят без изменений.
+                </li>
+                <li>
+                  Заполнить остальные 40 мест: uniform crossover двух элитных
+                  родителей + гауссова мутация (σ = 0.12, decay ×0.995).
+                </li>
+                <li>
+                  Чемпион = лучший геном. Его матчи транслируются в UI и попадают
+                  в архив реплеев.
+                </li>
+              </ol>
+              <p class="algorithm-note">
+                Синяя и красная популяции эволюционируют <strong>независимо</strong>,
+                но каждый матч оценки — коэволюция: ваш fitness зависит от текущей
+                силы противника.
+              </p>
+            </div>
+
+            <figure class="es-diagram" aria-label="Схема цикла эволюционных стратегий">
+              <svg viewBox="0 0 320 320" role="img">
+                <title>Цикл ES: популяция → оценка → отбор → мутация</title>
+                <circle cx="160" cy="160" r="130" fill="none" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                <circle cx="160" cy="30" r="5" class="node"/>
+                <text x="160" y="14" text-anchor="middle" class="diag-label">Популяция (48)</text>
+                <circle cx="290" cy="160" r="5" class="node"/>
+                <text x="305" y="164" class="diag-label">Оценка</text>
+                <circle cx="160" cy="290" r="5" class="node"/>
+                <text x="160" y="308" text-anchor="middle" class="diag-label">Отбор элиты (8)</text>
+                <circle cx="30" cy="160" r="5" class="node"/>
+                <text x="8" y="164" class="diag-label">Мутация σ</text>
+                <path d="M 160 36 A 130 130 0 0 1 284 160" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+                <path d="M 284 160 A 130 130 0 0 1 160 284" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+                <path d="M 160 284 A 130 130 0 0 1 36 160" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+                <path d="M 36 160 A 130 130 0 0 1 160 36" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+                <text x="160" y="168" text-anchor="middle" class="diag-center">G<sub>n</sub> → G<sub>n+1</sub></text>
+                <defs>
+                  <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                    <path d="M0,0 L6,3 L0,6 Z" fill="currentColor"/>
+                  </marker>
+                </defs>
+              </svg>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="environment">
+        <div class="section-inner reveal">
+          <span class="section-watermark" aria-hidden="true">03</span>
+          <header class="section-head">
+            <span class="section-num">03</span>
+            <div>
+              <h2>Архитектура агента и среды</h2>
+              <p class="section-deck">
+                Небольшая сеть — осознанный выбор: ES масштабируется по числу
+                параметров, а 28 входов не требуют глубокой архитектуры.
+              </p>
+            </div>
+          </header>
+
+          <div class="spec-grid">
+            <article class="spec-card">
+              <h3><span class="card-tag">NET</span> Нейросеть</h3>
+              <dl>
+                <div><dt>Вход</dt><dd>28 наблюдений</dd></div>
+                <div><dt>Скрытые слои</dt><dd>40 → 32, tanh</dd></div>
+                <div><dt>Выход</dt><dd>5 sigmoid → порог 0.35</dd></div>
+                <div><dt>Инициализация</dt><dd>Xavier</dd></div>
+                <div><dt>Параметры</dt><dd>~2 500</dd></div>
+              </dl>
+            </article>
+
+            <article class="spec-card">
+              <h3><span class="card-tag">MAP</span> Арена</h3>
+              <dl>
+                <div><dt>Карта</dt><dd>12×12 клеток, 4 м</dd></div>
+                <div><dt>Обзор</dt><dd>FOV 72°, дальность 26</dd></div>
+                <div><dt>Оружие</dt><dd>Пистолет, лук, катана</dd></div>
+                <div><dt>Физика</dt><dd>60 FPS, детерминизм по seed</dd></div>
+                <div><dt>Таймаут</dt><dd>20 с с эскалацией штрафа</dd></div>
+              </dl>
+            </article>
+
+            <article class="spec-card spec-card-wide">
+              <h3><span class="card-tag">FIT</span> Функция приспособленности (shaping)</h3>
+              <div class="fitness-bars">
+                <div class="fitness-row reward">
+                  <span class="fitness-label">Убийство</span>
+                  <span class="fitness-bar" style="--w: 100%"></span>
+                  <span class="fitness-val">+12 … +28</span>
+                </div>
+                <div class="fitness-row reward">
+                  <span class="fitness-label">Подбор оружия</span>
+                  <span class="fitness-bar" style="--w: 25%"></span>
+                  <span class="fitness-val">+3</span>
+                </div>
+                <div class="fitness-row reward">
+                  <span class="fitness-label">Урон</span>
+                  <span class="fitness-bar" style="--w: 21%"></span>
+                  <span class="fitness-val">+2.5 / HP</span>
+                </div>
+                <div class="fitness-row reward">
+                  <span class="fitness-label">Исследование</span>
+                  <span class="fitness-bar" style="--w: 8%"></span>
+                  <span class="fitness-val">+0.08 / клетка</span>
+                </div>
+                <div class="fitness-row penalty">
+                  <span class="fitness-label">Поражение</span>
+                  <span class="fitness-bar" style="--w: 100%"></span>
+                  <span class="fitness-val">−12</span>
+                </div>
+                <div class="fitness-row penalty">
+                  <span class="fitness-label">Ничья (таймаут)</span>
+                  <span class="fitness-bar" style="--w: 70%"></span>
+                  <span class="fitness-val">−5 … −13</span>
+                </div>
+              </div>
+              <p class="spec-footnote">
+                Штраф за ничью растёт после 8-й секунды, чтобы агенты не
+                «сидели» в углах. Дополнительно: штрафы за стагнацию, кемпинг и
+                шлифовку стен.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="protocol">
+        <div class="section-inner reveal">
+          <span class="section-watermark" aria-hidden="true">04</span>
+          <header class="section-head">
+            <span class="section-num">04</span>
+            <div>
+              <h2>Методологический протокол</h2>
+              <p class="section-deck">
+                Меры, которые отделяют исследование от «запустил и надеюсь».
+              </p>
+            </div>
+          </header>
+
+          <div class="protocol-timeline">
+            <article class="protocol-item">
+              <span class="protocol-id">A</span>
+              <div class="protocol-body">
+                <h3>Случайный seed карты при обучении</h3>
+                <p>
+                  Каждый eval-матч — новая раскладка стен. Агент учится
+                  обобщать навигацию, а не запоминать один лабиринт.
+                </p>
+              </div>
+            </article>
+            <article class="protocol-item">
+              <span class="protocol-id">B</span>
+              <div class="protocol-body">
+                <h3>Фиксированный seed при сравнении</h3>
+                <p>
+                  A/B тест чекпоинтов (вкладка «Сравнение») использует
+                  <code>WORLD_SEED = 42</code> — идентичная среда для обоих
+                  претендентов.
+                </p>
+              </div>
+            </article>
+            <article class="protocol-item">
+              <span class="protocol-id">C</span>
+              <div class="protocol-body">
+                <h3>Разделение eval и champion stats</h3>
+                <p>
+                  Матчи оценки популяции не попадают в win-rate UI. Статистика
+                  на главной — только матчи лучших геномов.
+                </p>
+              </div>
+            </article>
+            <article class="protocol-item">
+              <span class="protocol-id">D</span>
+              <div class="protocol-body">
+                <h3>Чередование хода</h3>
+                <p>
+                  В чётных кадрах первым действует синий, в нечётных — красный.
+                  Снижает bias «кто стрелял первым».
+                </p>
+              </div>
+            </article>
+            <article class="protocol-item">
+              <span class="protocol-id">E</span>
+              <div class="protocol-body">
+                <h3>Адаптивная мутация</h3>
+                <p>
+                  Если одна сторона выигрывает &gt;60% после 80 решающих матчей,
+                  проигрывающей стороне повышают σ — ускоряют поиск контр-стратегии.
+                </p>
+              </div>
+            </article>
+            <article class="protocol-item">
+              <span class="protocol-id">F</span>
+              <div class="protocol-body">
+                <h3>Экспорт протокола</h3>
+                <p>
+                  CSV истории поколений и JSON с полным описанием алгоритма,
+                  архитектуры и fitness-модели — для воспроизводимости в отчёте.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div class="section-inner reveal">
+          <div class="cta-panel">
+            <p class="cta-kicker">READY FOR DEPLOY</p>
+            <h2>Стенд уже обучается</h2>
+            <p>
+              Live-трансляция матчей чемпионов, визуализация весов и активаций,
+              архив реплеев с откатом, сравнение поколений.
+            </p>
+            <div class="cta-panel-actions">
+              <a class="btn btn-primary btn-lg" href="/demo.html">
+                Demo без установки
+                <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="btn btn-secondary btn-lg" href="/research.html">
+                Полный стенд
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-brand">TopGun Research</p>
+        <nav class="footer-links" aria-label="Ссылки">
+          <a href="/demo.html">Demo</a>
+          <a href="/research.html">Стенд</a>
+          <a href="/theory_for_uni/">Теория</a>
+        </nav>
+        <p class="footer-tech">ES · Node.js · Three.js · Evolution Strategies coevolution arena</p>
+        <p class="footer-meta">Исследовательский проект, не коммерческая игра</p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/landing.js"></script>
+  </body>
+</html>
