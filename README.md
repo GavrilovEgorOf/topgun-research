@@ -1,5 +1,7 @@
 # TopGun Research
 
+[![CI](https://github.com/GavrilovEgorOf/topgun-research/actions/workflows/ci.yml/badge.svg)](https://github.com/GavrilovEgorOf/topgun-research/actions/workflows/ci.yml)
+
 > Двухагентная 3D-арена с обучением нейросетей методом **эволюционных стратегий** — исследовательский стенд с live-визуализацией, реплеями и экспортом данных для отчёта.
 
 **EN:** A procedural 3D combat arena where two neural agents co-evolve via Evolution Strategies. Includes a Three.js research dashboard, WebSocket live feed, replay system, and reproducible headless simulation.
@@ -8,7 +10,7 @@
 
 | Страница | URL |
 |----------|-----|
-| **Online demo** (статика, без установки) | [`demo.html`](demo.html) — после деплоя см. [GitHub Pages](#github-pages) |
+| **Online demo** (статика, без установки) | https://gavrilovegorof.github.io/topgun-research/demo.html |
 | Лендинг | http://localhost:8080 |
 | Исследовательский стенд (live) | http://localhost:8080/research.html |
 | Теория (защита / отчёт) | http://localhost:8080/theory_for_uni/ |
@@ -127,7 +129,7 @@ tests/       ← unit-тесты (node:test)
 1. Запушьте репозиторий на GitHub.
 2. **Settings → Pages → Source:** GitHub Actions.
 3. Workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml) собирает и деплоит `demo.html`.
-4. URL: `https://<user>.github.io/<repo>/demo.html`
+4. URL: `https://gavrilovegorof.github.io/topgun-research/demo.html`
 
 CI: [`.github/workflows/ci.yml`](.github/workflows/ci.yml) — тесты и build на Node 20/22.
 
