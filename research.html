@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TopGun Research — Стенд</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+        <div id="match-timer" class="match-timer">20.000</div>
+        <div id="replay-badge" class="replay-badge live">Live</div>
+      </div>
+
+      <aside id="settings-panel">
+        <header class="panel-header">
+          <p class="panel-eyebrow">
+            <a href="/" class="panel-home-link">TopGun</a> · Эволюционные стратегии
+          </p>
+          <h1 class="panel-title">Исследование</h1>
+        </header>
+
+        <nav class="panel-tabs" id="panel-tabs" role="tablist" aria-label="Разделы панели">
+          <div class="panel-tabs-track">
+            <button type="button" class="panel-tab active" data-tab="main" role="tab" aria-selected="true">Главная</button>
+            <button type="button" class="panel-tab" data-tab="brain" role="tab" aria-selected="false">Нейросеть</button>
+            <button type="button" class="panel-tab" data-tab="compare" role="tab" aria-selected="false">Сравнение</button>
+            <button type="button" class="panel-tab" data-tab="data" role="tab" aria-selected="false">Данные</button>
+          </div>
+        </nav>
+
+        <div class="panel-content" id="panel-root">
+          <!-- Главная -->
+          <div class="tab-pane active" id="tab-main" role="tabpanel">
+            <section class="panel-section">
+              <h2 class="section-header">Обзор</h2>
+              <div class="inset-group">
+                <div class="hero-stat">
+                  <span class="hero-stat-value" id="stat-total">0</span>
+                  <span class="hero-stat-label">Матчей чемпионов</span>
+                </div>
+                <div class="inset-separator"></div>
+                <div class="metric-grid">
+                  <div class="metric">
+                    <span class="metric-value" id="stat-kill-rate">0%</span>
+                    <span class="metric-label">Доля убийств</span>
+                  </div>
+                  <div class="metric">
+                    <span class="metric-value" id="stat-visible-kill">0%</span>
+                    <span class="metric-label">Видимые убийства</span>
+                  </div>
+                  <div class="metric">
+                    <span class="metric-value" id="stat-weapon-sight">0%</span>
+                    <span class="metric-label">Видели оружие</span>
+                  </div>
+                  <div class="metric">
+                    <span class="metric-value" id="stat-best">—</span>
+                    <span class="metric-label">Рекорд</span>
+                  </div>
+                  <div class="metric metric-wide">
+                    <span class="metric-value" id="stat-avg-kill">—</span>
+                    <span class="metric-label">Ср. время убийства</span>
+                  </div>
+                </div>
+                <div class="inset-separator"></div>
+                <div class="win-block">
+                  <div class="win-bar" id="win-bar">
+                    <div class="win-seg blue" id="win-bar-blue"></div>
+                    <div class="win-seg red" id="win-bar-red"></div>
+                    <div class="win-seg draw" id="win-bar-draw"></div>
+                  </div>
+                  <div class="win-legend">
+                    <span class="win-chip"><i class="dot blue"></i>Синий <strong id="stat-blue-wins">0</strong></span>
+                    <span class="win-chip"><i class="dot red"></i>Красный <strong id="stat-red-wins">0</strong></span>
+                    <span class="win-chip"><i class="dot draw"></i>Ничья <strong id="stat-draws">0</strong></span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel-section panel-section-generation">
+              <h2 class="section-header">Поколение</h2>
+              <p class="section-footnote" id="fitness-note">
+                Отрицательный Fitness μ нормален: ничья (−8) и поражение (−12) часто перевешивают мелкие бонусы.
+              </p>
+              <div class="inset-group agent-compare">
+                <div class="compare-header">
+                  <span class="compare-col-label">Метрика</span>
+                  <div class="compare-col compare-col-blue">
+                    <span class="compare-team"><i class="dot blue"></i>Синий</span>
+                    <span class="compare-gen">G<span id="blue-gen" class="gen-num">0</span></span>
+                  </div>
+                  <div class="compare-col compare-col-red">
+                    <span class="compare-team"><i class="dot red"></i>Красный</span>
+                    <span class="compare-gen">G<span id="red-gen" class="gen-num">0</span></span>
+                  </div>
+                </div>
+                <div class="inset-separator"></div>
+                <div class="compare-row">
+                  <span class="compare-label"><abbr class="term-hint" title="Среднее (μ) fitness по популяции за поколение.">Fitness μ</abbr></span>
+                  <span id="blue-fitness" class="compare-value">—</span>
+                  <span id="red-fitness" class="compare-value">—</span>
+                </div>
+                <div class="inset-separator inset-separator-inset"></div>
+                <div class="compare-row">
+                  <span class="compare-label"><abbr class="term-hint" title="Доля матчей с подбором оружия.">Подбор</abbr></span>
+                  <span id="blue-pickup" class="compare-value">—</span>
+                  <span id="red-pickup" class="compare-value">—</span>
+                </div>
+                <div class="inset-separator inset-separator-inset"></div>
+                <div class="compare-row">
+                  <span class="compare-label"><abbr class="term-hint" title="Доля матчей с убийством.">Убийства</abbr></span>
+                  <span id="blue-kill-rate" class="compare-value">—</span>
+                  <span id="red-kill-rate" class="compare-value">—</span>
+                </div>
+                <div class="inset-separator inset-separator-inset"></div>
+                <div class="compare-row">
+                  <span class="compare-label"><abbr class="term-hint" title="σ — сила гауссовской мутации весов.">σ мутации</abbr></span>
+                  <span id="blue-mutation" class="compare-value">—</span>
+                  <span id="red-mutation" class="compare-value">—</span>
+                </div>
+                <div class="inset-separator"></div>
+                <div class="compare-actions">
+                  <p class="agent-actions-line"><span class="team-tag blue">Синий</span> <span id="blue-actions">—</span></p>
+                  <p class="agent-actions-line"><span class="team-tag red">Красный</span> <span id="red-actions">—</span></p>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel-section">
+              <h2 class="section-header">Динамика</h2>
+              <div class="inset-group inset-group-flush">
+                <canvas id="training-chart" class="training-chart"></canvas>
+                <div id="chart-legend" class="chart-legend"></div>
+              </div>
+            </section>
+
+            <section class="panel-section">
+              <h2 class="section-header">Архив матчей</h2>
+              <div class="inset-group">
+                <select id="replay-select" class="field-select"></select>
+                <div class="btn-row btn-row-archive">
+                  <button id="btn-watch" type="button" class="btn btn-primary">Смотреть</button>
+                  <button id="btn-live" type="button" class="btn">Live</button>
+                  <button id="btn-rollback" type="button" class="btn btn-secondary">Откат</button>
+                </div>
+                <div class="inset-separator inset-separator-list"></div>
+                <div id="replay-list" class="replay-list"></div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Нейросеть -->
+          <div class="tab-pane" id="tab-brain" role="tabpanel" hidden>
+            <div id="brain-panel-root" class="tab-pane-stack tab-pane-brain">
+              <section class="panel-section">
+                <h2 class="section-header">Агент</h2>
+                <div class="inset-group inset-group-compact">
+                  <div class="segmented" role="group" aria-label="Выбор агента">
+                    <button type="button" class="segmented-btn active" data-brain-side="blue">Синий</button>
+                    <button type="button" class="segmented-btn" data-brain-side="red">Красный</button>
+                  </div>
+                </div>
+              </section>
+
+              <section class="panel-section">
+                <h2 class="section-header">Наблюдения (28)</h2>
+                <p class="section-footnote section-footnote-research">6 групп входов (28 суммарно): позиция, статус, враг, оружие, луч, стены. Пунктир — базовый уровень 50%.</p>
+                <div class="inset-group inset-group-flush brain-chart-card">
+                  <div class="chart-wrap chart-wrap-radar">
+                    <canvas id="brain-obs-chart"></canvas>
+                  </div>
+                </div>
+              </section>
+
+              <section class="panel-section">
+                <h2 class="section-header">Выходы сети</h2>
+                <p class="section-footnote section-footnote-research">Порог движения 0.35, огонь — 0.35. Пунктир — порог срабатывания.</p>
+                <div class="inset-group inset-group-flush brain-chart-card">
+                  <div class="chart-wrap chart-wrap-bars">
+                    <canvas id="brain-output-chart"></canvas>
+                  </div>
+                  <div class="brain-chart-footer" id="brain-actions-detail">—</div>
+                </div>
+              </section>
+
+              <section class="panel-section">
+                <h2 class="section-header">Активации скрытых слоёв</h2>
+                <p class="section-footnote section-footnote-research">Тепловая карта tanh-активаций: строки — скрытые слои, столбцы — нейроны.</p>
+                <div class="inset-group inset-group-flush brain-chart-card">
+                  <div class="chart-wrap chart-wrap-heatmap-sm">
+                    <canvas id="brain-act-chart"></canvas>
+                  </div>
+                </div>
+              </section>
+
+              <section class="panel-section">
+                <h2 class="section-header">Тепловая карта весов</h2>
+                <p class="section-footnote section-footnote-research">Матрица весов выбранного слоя: синий — положительные, красный — отрицательные.</p>
+                <div class="inset-group brain-chart-card brain-heatmap-card">
+                  <div class="brain-select-wrap">
+                    <label class="field-label" for="brain-layer-select">Слой сети</label>
+                    <select id="brain-layer-select" class="field-select field-select-flush"></select>
+                  </div>
+                  <div class="brain-heatmap-meta" id="brain-heatmap-meta">
+                    <span class="heatmap-meta-item">—</span>
+                  </div>
+                  <div class="inset-separator"></div>
+                  <div class="chart-wrap chart-wrap-heatmap">
+                    <canvas id="brain-heatmap"></canvas>
+                  </div>
+                  <div class="brain-heatmap-legend" aria-hidden="true">
+                    <span class="heatmap-legend-label">−</span>
+                    <div class="heatmap-legend-bar"></div>
+                    <span class="heatmap-legend-label">+</span>
+                  </div>
+                </div>
+              </section>
+
+              <section class="panel-section">
+                <h2 class="section-header">Статистика весов</h2>
+                <div class="inset-group brain-stats-panel" id="brain-weight-stats"></div>
+              </section>
+            </div>
+          </div>
+
+          <!-- Сравнение -->
+          <div class="tab-pane" id="tab-compare" role="tabpanel" hidden>
+            <section class="panel-section">
+              <h2 class="section-header">Сравнение поколений</h2>
+              <p class="section-footnote section-footnote-research">
+                Матч: чемпион «Синий» на чекпоинте A против чемпиона «Синий» на чекпоинте B (фиксированный seed карты для честного сравнения).
+              </p>
+              <div class="inset-group">
+                <div class="form-field">
+                  <label class="field-label" for="compare-gen-a">Поколение A</label>
+                  <select id="compare-gen-a" class="field-select"></select>
+                </div>
+                <div class="form-field">
+                  <label class="field-label" for="compare-gen-b">Поколение B</label>
+                  <select id="compare-gen-b" class="field-select"></select>
+                </div>
+                <div class="btn-row">
+                  <button id="btn-compare-run" type="button" class="btn btn-primary">Запустить матч</button>
+                  <button id="btn-compare-watch" type="button" class="btn" disabled>Смотреть реплей</button>
+                </div>
+                <div class="inset-separator"></div>
+                <div id="compare-result" class="compare-result-wrap">
+                  <p class="muted">Выберите два чекпоинта и запустите сравнение.</p>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Данные -->
+          <div class="tab-pane" id="tab-data" role="tabpanel" hidden>
+            <section class="panel-section">
+              <h2 class="section-header">Сводка сессии</h2>
+              <div class="inset-group inset-group-flush">
+                <dl class="info-list">
+                  <div><dt>Матчей оценки (eval)</dt><dd id="stat-eval-games">0</dd></div>
+                  <div><dt>Доля ничьих</dt><dd id="stat-draw-rate">—</dd></div>
+                  <div><dt>Параллельность</dt><dd id="stat-parallel">—</dd></div>
+                  <div><dt>Поколений</dt><dd id="stat-gens">—</dd></div>
+                  <div><dt>Чекпоинтов</dt><dd id="stat-checkpoints">0</dd></div>
+                  <div><dt>Реплеев</dt><dd id="stat-replays-count">0</dd></div>
+                  <div><dt>Сессия</dt><dd id="stat-uptime">—</dd></div>
+                  <div><dt>Архитектура</dt><dd id="stat-architecture">—</dd></div>
+                </dl>
+              </div>
+            </section>
+
+            <section class="panel-section">
+              <h2 class="section-header">Разбор fitness (последний матч чемпионов)</h2>
+              <div class="inset-group inset-group-flush">
+                <div id="fitness-breakdown" class="rewards-table rewards-table-compact"></div>
+              </div>
+            </section>
+
+            <section class="panel-section">
+              <h2 class="section-header">Награды и штрафы</h2>
+              <div class="inset-group inset-group-flush">
+                <div id="rewards-table-overview" class="rewards-table rewards-table-compact"></div>
+              </div>
+            </section>
+
+            <section class="panel-section">
+              <h2 class="section-header">Экспорт для отчёта</h2>
+              <div class="inset-group">
+                <p class="section-footnote section-footnote-inset">
+                  CSV — динамика по поколениям. JSON — полный протокол эксперимента и метаданные.
+                </p>
+                <div class="btn-stack btn-stack-tight">
+                  <a id="export-history" class="btn btn-full btn-link" href="/api/export/history.csv" download>История (CSV)</a>
+                  <a id="export-protocol" class="btn btn-full btn-link" href="/api/export/protocol.json" download>Протокол (JSON)</a>
+                  <a id="export-meta" class="btn btn-full btn-link" href="/api/export/meta.json" download>Полные данные (JSON)</a>
+                </div>
+              </div>
+            </section>
+
+            <details class="panel-section panel-section-help">
+              <summary class="section-header section-header-link">Справка по терминам</summary>
+              <div class="inset-group inset-group-flush">
+                <dl class="glossary-list">
+                  <div>
+                    <dt><abbr class="term-hint" title="Суммарная оценка за матч: награды минус штрафы.">Fitness</abbr></dt>
+                    <dd>Приспособленность за один матч</dd>
+                  </div>
+                  <div>
+                    <dt><abbr class="term-hint" title="Среднее fitness по популяции.">Fitness μ</abbr></dt>
+                    <dd>Средний fitness популяции</dd>
+                  </div>
+                  <div>
+                    <dt><abbr class="term-hint" title="Элита + кроссовер + гауссова мутация весов.">Эволюционные стратегии</abbr></dt>
+                    <dd>Метод оптимизации весов без градиентов</dd>
+                  </div>
+                  <div>
+                    <dt><abbr class="term-hint" title="Сила случайных изменений весов.">σ мутации</abbr></dt>
+                    <dd>Амплитуда мутации весов</dd>
+                  </div>
+                </dl>
+              </div>
+            </details>
+
+            <div class="btn-stack">
+              <button id="btn-zero" type="button" class="btn btn-destructive btn-full">Сбор весов (нули)</button>
+              <button id="btn-reset" type="button" class="btn btn-secondary btn-full">Сбросить обучение</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
