@@ -116,10 +116,10 @@ export function decodeActions(outputs) {
 
 export function actionLabels(input) {
   const parts = [];
-  if (input.up) parts.push("вперёд");
-  if (input.down) parts.push("назад");
-  if (input.left) parts.push("влево");
-  if (input.right) parts.push("вправо");
-  if (input.shoot) parts.push("огонь");
+  if (input.up) parts.push("forward");
+  if (input.down) parts.push("back");
+  if (input.left) parts.push("left");
+  if (input.right) parts.push("right");
+  if (input.shoot) parts.push("fire");
   return parts.length ? parts.join(", ") : "—";
 }

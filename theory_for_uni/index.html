@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Теоретическая часть исследовательского проекта TopGun Research — коэволюция боевых агентов методом эволюционных стратегий."
+      content="Theoretical part of the TopGun Research project — coevolution of combat agents using evolution strategies."
     />
-    <title>TopGun Research — Теория для защиты</title>
+    <title>TopGun Research — Theory for Defense</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,756 +19,756 @@
   <body>
     <div class="layout">
       <aside class="sidebar">
-        <p class="sidebar-title">Исследовательский проект</p>
-        <h1>TopGun Research<br />Теоретическая база</h1>
-        <nav aria-label="Содержание">
-          <div class="nav-group">Основы</div>
-          <a href="#intro">Введение</a>
-          <a href="#relevance">Актуальность</a>
-          <a href="#goal">Цель и задачи</a>
-          <a href="#problem">Постановка задачи</a>
-          <div class="nav-group">Теория</div>
-          <a href="#theory-es">Эволюционные стратегии</a>
-          <a href="#theory-coevo">Коэволюция</a>
+        <p class="sidebar-title">Research Project</p>
+        <h1>TopGun Research<br />Theoretical Foundation</h1>
+        <nav aria-label="Table of contents">
+          <div class="nav-group">Basics</div>
+          <a href="#intro">Introduction</a>
+          <a href="#relevance">Relevance</a>
+          <a href="#goal">Goal and Objectives</a>
+          <a href="#problem">Problem Statement</a>
+          <div class="nav-group">Theory</div>
+          <a href="#theory-es">Evolution Strategies</a>
+          <a href="#theory-coevo">Coevolution</a>
           <a href="#theory-rl">ES vs RL</a>
-          <a href="#architecture">Архитектура</a>
-          <a href="#fitness">Функция приспособленности</a>
-          <a href="#protocol">Протокол эксперимента</a>
-          <div class="nav-group">Защита</div>
-          <a href="#results">Ожидаемые результаты</a>
-          <a href="#limitations">Ограничения</a>
-          <a href="#defense">Аргументы и контраргументы</a>
-          <a href="#glossary">Глоссарий</a>
-          <a href="#sources">Источники</a>
-          <div class="nav-group">Проект</div>
-          <a href="/">Лендинг</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#fitness">Fitness Function</a>
+          <a href="#protocol">Experiment Protocol</a>
+          <div class="nav-group">Defense</div>
+          <a href="#results">Expected Results</a>
+          <a href="#limitations">Limitations</a>
+          <a href="#defense">Arguments and Counterarguments</a>
+          <a href="#glossary">Glossary</a>
+          <a href="#sources">Sources</a>
+          <div class="nav-group">Project</div>
+          <a href="/">Landing</a>
           <a href="/demo.html">Demo</a>
-          <a href="/research.html">Стенд</a>
+          <a href="/research.html">Research Stand</a>
         </nav>
       </aside>
 
       <main class="content">
         <header class="hero" id="intro">
-          <p class="hero-kicker">Теоретическая часть · 2026</p>
-          <h2>Коэволюция нейросетевых агентов в 3D-арене без градиентов</h2>
+          <p class="hero-kicker">Theoretical Part · 2026</p>
+          <h2>Coevolution of Neural Network Agents in a 3D Arena Without Gradients</h2>
           <p class="hero-lead">
-            Этот документ — база знаний для защиты проекта <strong>TopGun Research</strong>.
-            Здесь собраны определения, логика выбора метода, описание среды и готовые ответы
-            на типичные вопросы комиссии. Язык намеренно простой: без лишней «научной воды»,
-            но с точными фактами из реализации проекта.
+            This document is the knowledge base for defending the <strong>TopGun Research</strong> project.
+            It collects definitions, rationale for method selection, environment description, and ready-made answers
+            to typical committee questions. The language is deliberately plain: no unnecessary academic fluff,
+            but with precise facts from the project implementation.
           </p>
         </header>
 
-        <!-- АКТУАЛЬНОСТЬ -->
+        <!-- RELEVANCE -->
         <section id="relevance">
-          <h2>Актуальность темы</h2>
-          <p class="section-deck">Зачем вообще учить агентов сражаться в симуляторе?</p>
+          <h2>Topic Relevance</h2>
+          <p class="section-deck">Why teach agents to fight in a simulator at all?</p>
 
           <p>
-            Искусственный интеллект в играх и робототехнике часто сталкивается с одной
-            проблемой: <strong>среда не даёт готового «градиента ошибки»</strong>. Симулятор
-            физики — это цепочка if-ов, столкновений и дискретных событий (попал / не попал,
-            убил / не убил). Через такую среду нельзя просто взять и провести обратное
-            распространение ошибки, как в обучении картинок.
+            Artificial intelligence in games and robotics often runs into one
+            problem: <strong>the environment does not provide a ready-made "error gradient"</strong>. A physics
+            simulator is a chain of if-statements, collisions, and discrete events (hit / miss,
+            kill / no kill). You cannot simply run backpropagation through such an environment
+            the way you do when training on images.
           </p>
           <p>
-            Классическое обучение с подкреплением (RL) хорошо работает, когда награда частая
-            и среда «мягкая». В боевых сценариях награда приходит редко (убийство — раз за
-            матч), а противник тоже меняется — ландшафт задачи постоянно сдвигается.
+            Classical reinforcement learning (RL) works well when rewards are frequent
+            and the environment is "soft." In combat scenarios, rewards are rare (a kill — once per
+            match), and the opponent also changes — the problem landscape keeps shifting.
           </p>
           <p>
-            <strong>Эволюционные стратегии (ES)</strong> — альтернативный путь: вместо
-            градиента мы оцениваем целые наборы весов нейросети по одному числу — fitness
-            (приспособленности). Это проще объяснить, проще воспроизвести и удобно
-            параллелить на нескольких ядрах процессора.
+            <strong>Evolution Strategies (ES)</strong> offer an alternative: instead of
+            a gradient, we evaluate entire sets of neural network weights with a single number — fitness.
+            This is easier to explain, easier to reproduce, and convenient
+            to parallelize across multiple CPU cores.
           </p>
 
           <div class="callout">
-            <strong>Практический смысл:</strong> проект показывает, как без тяжёлых ML-фреймворков
-            и GPU можно получить осмысленное поведение агентов в нетривиальной 3D-среде —
-            с частичной видимостью, разным оружием и процедурной картой.
+            <strong>Practical meaning:</strong> the project shows how, without heavy ML frameworks
+            and a GPU, you can obtain meaningful agent behavior in a nontrivial 3D environment —
+            with partial visibility, different weapons, and a procedural map.
           </div>
         </section>
 
-        <!-- ЦЕЛЬ -->
+        <!-- GOAL -->
         <section id="goal">
-          <h2>Цель и задачи</h2>
-          <p class="section-deck">Что именно исследуем и что должно получиться.</p>
+          <h2>Goal and Objectives</h2>
+          <p class="section-deck">What exactly we are researching and what should come out of it.</p>
 
-          <h3>Цель</h3>
+          <h3>Goal</h3>
           <p>
-            Разработать исследовательский стенд, в котором два нейросетевых агента
-            <strong>коэволюционируют</strong> в процедурной 3D-арене методом эволюционных
-            стратегий, и показать, что метод даёт устойчивое улучшение поведения без
-            дифференцируемой среды.
+            Develop a research stand in which two neural network agents
+            <strong>coevolve</strong> in a procedural 3D arena using evolution
+            strategies, and demonstrate that the method yields steady behavioral improvement without
+            a differentiable environment.
           </p>
 
-          <h3>Задачи</h3>
+          <h3>Objectives</h3>
           <ol>
-            <li>Смоделировать детерминированную игровую среду: карта, оружие, частичная видимость, физика 60 FPS.</li>
-            <li>Описать вектор наблюдений (28 признаков) и дискретные действия агента (5 выходов сети).</li>
-            <li>Реализовать популяционный алгоритм: элита, кроссовер, гауссова мутация, две независимые популяции.</li>
-            <li>Спроектировать функцию приспособленности с балансом между победой, исследованием и анти-пассивностью.</li>
-            <li>Обеспечить воспроизводимость: фиксированные seed для сравнения, случайные seed при обучении, экспорт CSV/JSON.</li>
-            <li>Визуализировать процесс: live-матчи, графики поколений, сравнение чекпоинтов, разбор весов сети.</li>
+            <li>Model a deterministic game environment: map, weapons, partial visibility, 60 FPS physics.</li>
+            <li>Describe the observation vector (28 features) and discrete agent actions (5 network outputs).</li>
+            <li>Implement a population algorithm: elite, crossover, Gaussian mutation, two independent populations.</li>
+            <li>Design a fitness function balancing victory, exploration, and anti-passivity.</li>
+            <li>Ensure reproducibility: fixed seeds for comparison, random seeds during training, CSV/JSON export.</li>
+            <li>Visualize the process: live matches, generation charts, checkpoint comparison, network weight analysis.</li>
           </ol>
         </section>
 
-        <!-- ПОСТАНОВКА -->
+        <!-- PROBLEM STATEMENT -->
         <section id="problem">
-          <h2>Постановка задачи</h2>
-          <p class="section-deck">Что видит агент, что делает и как оценивается результат.</p>
+          <h2>Problem Statement</h2>
+          <p class="section-deck">What the agent sees, what it does, and how the result is evaluated.</p>
 
           <p>
-            Два агента — <strong>синий</strong> и <strong>красный</strong> — появляются на
-            процедурной карте 12×12 клеток (каждая 4 м). На карте есть стены, три типа
-            оружия (пистолет, лук, катана) и ограниченный обзор.
+            Two agents — <strong>blue</strong> and <strong>red</strong> — spawn on
+            a procedural 12×12 cell map (each cell is 4 m). The map has walls, three weapon types
+            (pistol, bow, katana), and limited field of view.
           </p>
 
-          <h3>Наблюдения (28 чисел)</h3>
-          <p>Каждый кадр агент получает нормализованный вектор:</p>
+          <h3>Observations (28 numbers)</h3>
+          <p>Each frame the agent receives a normalized vector:</p>
           <ul>
-            <li><strong>Своё состояние:</strong> позиция X/Z, направление взгляда (sin/cos), HP, тип оружия, перезарядка.</li>
-            <li><strong>Противник</strong> (если виден в конусе 72° и нет стены между): флаг видимости, дистанция, угол, HP и оружие врага.</li>
-            <li><strong>Ближайшее оружие</strong> (если видно): тип, дистанция, угол.</li>
-            <li><strong>Луч взгляда:</strong> дистанция до препятствия и тип цели (стена / оружие / враг).</li>
-            <li><strong>8 лучей по кругу</strong> (каждые 45°): расстояние до стены — чтобы «чувствовать» окружение.</li>
+            <li><strong>Own state:</strong> X/Z position, look direction (sin/cos), HP, weapon type, reload cooldown.</li>
+            <li><strong>Opponent</strong> (if visible in a 72° cone with no wall between): visibility flag, distance, angle, enemy HP and weapon.</li>
+            <li><strong>Nearest weapon</strong> (if visible): type, distance, angle.</li>
+            <li><strong>Look ray:</strong> distance to obstacle and target type (wall / weapon / enemy).</li>
+            <li><strong>8 rays in a circle</strong> (every 45°): distance to wall — to "sense" the surroundings.</li>
           </ul>
 
-          <h3>Действия (5 выходов сети)</h3>
+          <h3>Actions (5 network outputs)</h3>
           <p>
-            Нейросеть выдаёт 5 чисел от 0 до 1 (sigmoid). Если значение &gt; 0.35 — действие
-            активно: вперёд, влево, вправо, выстрел/удар. Назад в текущей версии отключён —
-            чтобы не поощрять отступление в угол.
+            The neural network outputs 5 numbers from 0 to 1 (sigmoid). If a value &gt; 0.35 — the action
+            is active: forward, left, right, shoot/strike. Backward is disabled in the current version —
+            to avoid rewarding retreating into a corner.
           </p>
 
-          <h3>Условия матча</h3>
+          <h3>Match conditions</h3>
           <ul>
-            <li>Длительность: до <strong>20 секунд</strong> или до первого убийства.</li>
-            <li>HP игрока: 3. Урон оружия: 1 за попадание (катана — ближний бой по дуге).</li>
-            <li>Частичная наблюдаемость: врага и оружие не видно за стеной или вне поля зрения.</li>
-            <li>Детерминизм: при одинаковом seed карты и весах результат матча повторяется.</li>
+            <li>Duration: up to <strong>20 seconds</strong> or until the first kill.</li>
+            <li>Player HP: 3. Weapon damage: 1 per hit (katana — melee arc attack).</li>
+            <li>Partial observability: enemy and weapons are not visible behind walls or outside the field of view.</li>
+            <li>Determinism: with the same map seed and weights, the match result repeats.</li>
           </ul>
 
           <div class="callout warn">
-            <strong>Ключевое ограничение среды:</strong> fitness — это сумма наград и штрафов за
-            весь эпизод. Внутри симуляции нет дифференцируемой функции потерь. Именно поэтому
-            выбран метод без backprop через среду.
+            <strong>Key environment constraint:</strong> fitness is the sum of rewards and penalties for
+            the entire episode. There is no differentiable loss function inside the simulation. That is why
+            a method without backprop through the environment was chosen.
           </div>
         </section>
 
         <!-- ES -->
         <section id="theory-es">
-          <h2>Эволюционные стратегии — теория простыми словами</h2>
-          <p class="section-deck">Как учится сеть, если нельзя взять производную.</p>
+          <h2>Evolution Strategies — Theory in Plain Language</h2>
+          <p class="section-deck">How the network learns when you cannot take a derivative.</p>
 
           <p>
-            Представьте, что веса нейросети — это <strong>геном</strong>. У нас есть
-            популяция из 48 таких геномов на каждую сторону (синие и красные отдельно).
-            Каждое поколение:
+            Imagine that neural network weights are a <strong>genome</strong>. We have
+            a population of 48 such genomes per side (blue and red separately).
+            Each generation:
           </p>
 
           <div class="flow">
-            <span class="flow-step">1. Оценка — 48 матчей против чемпиона врага</span>
+            <span class="flow-step">1. Evaluation — 48 matches against the enemy champion</span>
             <span class="flow-arrow">→</span>
-            <span class="flow-step">2. Сортировка по fitness</span>
+            <span class="flow-step">2. Sort by fitness</span>
             <span class="flow-arrow">→</span>
-            <span class="flow-step">3. Топ-8 в элиту</span>
+            <span class="flow-step">3. Top 8 into elite</span>
             <span class="flow-arrow">→</span>
-            <span class="flow-step">4. Кроссовер + мутация → новое поколение</span>
+            <span class="flow-step">4. Crossover + mutation → new generation</span>
           </div>
 
-          <h3>Основные операторы</h3>
+          <h3>Main operators</h3>
           <ul>
-            <li><strong>Мутация:</strong> к весам добавляется случайный шум по нормальному закону. Сила шума σ = 0.12, каждое поколение умножается на 0.995 (постепенное «остывание»). Минимум σ = 0.03.</li>
-            <li><strong>Кроссовер:</strong> у каждого веса ребёнка случайно берётся значение от одного из двух элитных родителей (uniform crossover).</li>
-            <li><strong>Элитизм:</strong> лучшие 8 особей переходят без изменений — прогресс не теряется из-за неудачной мутации.</li>
-            <li><strong>Чемпион:</strong> лучший геном поколения. Именно он играет live-матчи и попадает в статистику UI.</li>
+            <li><strong>Mutation:</strong> random noise is added to weights from a normal distribution. Noise strength σ = 0.12, multiplied by 0.995 each generation (gradual "cooling"). Minimum σ = 0.03.</li>
+            <li><strong>Crossover:</strong> for each child weight, a value is randomly taken from one of two elite parents (uniform crossover).</li>
+            <li><strong>Elitism:</strong> the best 8 individuals pass unchanged — progress is not lost due to an unlucky mutation.</li>
+            <li><strong>Champion:</strong> the best genome of the generation. It plays live matches and appears in UI statistics.</li>
           </ul>
 
           <p>
-            В отличие от генетических алгоритмов на битовых строках, здесь геном — это
-            <strong>непрерывный вектор весов MLP</strong>. Это стандартный подход Neuroevolution.
+            Unlike genetic algorithms on bit strings, here the genome is a
+            <strong>continuous vector of MLP weights</strong>. This is the standard Neuroevolution approach.
           </p>
         </section>
 
-        <!-- КОЭВОЛЮЦИЯ -->
+        <!-- COEVOLUTION -->
         <section id="theory-coevo">
-          <h2>Коэволюция</h2>
-          <p class="section-deck">Почему «учитель» постоянно меняется.</p>
+          <h2>Coevolution</h2>
+          <p class="section-deck">Why the "teacher" keeps changing.</p>
 
           <p>
-            Синяя и красная популяции эволюционируют <strong>независимо</strong>, но каждый
-            матч оценки — это бой против <em>текущего чемпиона</em> противоположной стороны.
-            Если синие нашли удачную тактику, fitness красных падает — и наоборот.
+            Blue and red populations evolve <strong>independently</strong>, but each
+            evaluation match is a fight against the <em>current champion</em> of the opposite side.
+            If blue finds a successful tactic, red's fitness drops — and vice versa.
           </p>
           <p>
-            Такой ландшафт называют <strong>нестационарным</strong>: то, что было хорошим
-            в поколении 50, может стать слабым в поколении 80, потому что противник тоже вырос.
-            Это похоже на гонку вооружений в природе (эффект «Красной королевы»).
+            Such a landscape is called <strong>non-stationary</strong>: what was good
+            in generation 50 may become weak in generation 80, because the opponent has also improved.
+            This resembles an arms race in nature (the "Red Queen" effect).
           </p>
 
-          <h3>Как проект с этим справляется</h3>
+          <h3>How the project handles this</h3>
           <ul>
-            <li><strong>Адаптивная мутация:</strong> если одна сторона выигрывает &gt;60% матчей после 80 решающих боёв, проигрывающей стороне временно повышают σ (до 1.5×, максимум 0.22) — быстрее ищут контр-стратегию.</li>
-            <li><strong>Случайная карта при обучении:</strong> нельзя «зазубрить» одну раскладку стен.</li>
-            <li><strong>Shaping-награды:</strong> мелкие бонусы за движение, исследование и подбор оружия помогают не застрять в локальном оптимуме «стоять и ждать».</li>
+            <li><strong>Adaptive mutation:</strong> if one side wins &gt;60% of matches after 80 decisive fights, the losing side temporarily gets a higher σ (up to 1.5×, maximum 0.22) — faster search for a counter-strategy.</li>
+            <li><strong>Random map during training:</strong> agents cannot "memorize" one wall layout.</li>
+            <li><strong>Shaping rewards:</strong> small bonuses for movement, exploration, and picking up weapons help avoid getting stuck in the local optimum of "stand and wait."</li>
           </ul>
         </section>
 
         <!-- ES vs RL -->
         <section id="theory-rl">
-          <h2>Почему ES, а не обучение с подкреплением (PPO и др.)</h2>
-          <p class="section-deck">Сравнение подходов — не «что моднее», а что подходит под среду.</p>
+          <h2>Why ES, Not Reinforcement Learning (PPO, etc.)</h2>
+          <p class="section-deck">Comparing approaches — not "what's trendier," but what fits the environment.</p>
 
           <table>
             <thead>
               <tr>
-                <th>Критерий</th>
+                <th>Criterion</th>
                 <th>Policy Gradient / PPO</th>
-                <th class="col-good">Evolution Strategies (наш выбор)</th>
+                <th class="col-good">Evolution Strategies (our choice)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Нужен градиент через среду?</td>
-                <td>Да, или сложный суррогат</td>
-                <td class="col-good">Нет — только число fitness в конце матча</td>
+                <td>Gradient through environment needed?</td>
+                <td>Yes, or a complex surrogate</td>
+                <td class="col-good">No — only a fitness number at the end of the match</td>
               </tr>
               <tr>
-                <td>Редкая награда (убийство раз за эпизод)</td>
-                <td>Нужен аккуратный reward shaping и value-базис</td>
-                <td class="col-good">Популяция «усредняет» шум; элита сохраняет удачные мутации</td>
+                <td>Sparse reward (kill once per episode)</td>
+                <td>Requires careful reward shaping and a value baseline</td>
+                <td class="col-good">Population "averages out" noise; elite preserves successful mutations</td>
               </tr>
               <tr>
-                <td>Параллелизм</td>
-                <td>Зависит от on-policy сэмплирования</td>
-                <td class="col-good">До ~96 независимых матчей на worker threads</td>
+                <td>Parallelism</td>
+                <td>Depends on on-policy sampling</td>
+                <td class="col-good">Up to ~96 independent matches on worker threads</td>
               </tr>
               <tr>
-                <td>Интерпретируемость</td>
-                <td>Градиенты в скрытых слоях</td>
-                <td class="col-good">Прямое A/B сравнение весов между поколениями</td>
+                <td>Interpretability</td>
+                <td>Gradients in hidden layers</td>
+                <td class="col-good">Direct A/B weight comparison between generations</td>
               </tr>
               <tr>
-                <td>Размер сети</td>
-                <td>Миллионы параметров (глубокое RL)</td>
-                <td class="col-good">~2 500 параметров — ES эффективен на малых MLP</td>
+                <td>Network size</td>
+                <td>Millions of parameters (deep RL)</td>
+                <td class="col-good">~2,500 parameters — ES is effective on small MLPs</td>
               </tr>
               <tr>
-                <td>Зависимости проекта</td>
-                <td>PyTorch / TF, часто GPU</td>
-                <td class="col-good">Чистый JavaScript, CPU, без внешних ML-библиотек</td>
+                <td>Project dependencies</td>
+                <td>PyTorch / TF, often GPU</td>
+                <td class="col-good">Pure JavaScript, CPU, no external ML libraries</td>
               </tr>
             </tbody>
           </table>
 
           <div class="callout">
-            <strong>Важно для защиты:</strong> мы не утверждаем, что ES «лучше RL вообще». Мы
-            показываем, что для <em>данной</em> недифференцируемой среды с малым MLP и
-            коэволюцией ES — осознанный и рабочий выбор.
+            <strong>Important for defense:</strong> we do not claim that ES is "better than RL in general." We
+            show that for <em>this</em> non-differentiable environment with a small MLP and
+            coevolution, ES is a deliberate and workable choice.
           </div>
         </section>
 
-        <!-- АРХИТЕКТУРА -->
+        <!-- ARCHITECTURE -->
         <section id="architecture">
-          <h2>Архитектура агента и стенда</h2>
-          <p class="section-deck">Технические характеристики — можно зачитывать на защите.</p>
+          <h2>Agent and Stand Architecture</h2>
+          <p class="section-deck">Technical specifications — can be read aloud at the defense.</p>
 
           <div class="card-grid">
             <article class="card">
-              <h3>Нейросеть (MLP)</h3>
+              <h3>Neural Network (MLP)</h3>
               <dl>
-                <dt>Вход</dt><dd>28 наблюдений</dd>
-                <dt>Скрытые слои</dt><dd>40 → 32, tanh</dd>
-                <dt>Выход</dt><dd>5 sigmoid → порог 0.35</dd>
-                <dt>Инициализация</dt><dd>Xavier</dd>
-                <dt>Параметров</dt><dd>~2 500</dd>
+                <dt>Input</dt><dd>28 observations</dd>
+                <dt>Hidden layers</dt><dd>40 → 32, tanh</dd>
+                <dt>Output</dt><dd>5 sigmoid → threshold 0.35</dd>
+                <dt>Initialization</dt><dd>Xavier</dd>
+                <dt>Parameters</dt><dd>~2,500</dd>
               </dl>
             </article>
 
             <article class="card">
-              <h3>Эволюция (на сторону)</h3>
+              <h3>Evolution (per side)</h3>
               <dl>
-                <dt>Популяция</dt><dd>48 геномов</dd>
-                <dt>Элита</dt><dd>8</dd>
-                <dt>Мутация σ</dt><dd>0.12 → ×0.995/поколение</dd>
-                <dt>Вероятность мутации веса</dt><dd>85%</dd>
+                <dt>Population</dt><dd>48 genomes</dd>
+                <dt>Elite</dt><dd>8</dd>
+                <dt>Mutation σ</dt><dd>0.12 → ×0.995/generation</dd>
+                <dt>Weight mutation probability</dt><dd>85%</dd>
               </dl>
             </article>
 
             <article class="card">
-              <h3>Арена</h3>
+              <h3>Arena</h3>
               <dl>
-                <dt>Карта</dt><dd>12×12 клеток, 4 м</dd>
-                <dt>Обзор</dt><dd>FOV 72°, дальность 26</dd>
-                <dt>Оружие</dt><dd>Пистолет, лук, катана</dd>
-                <dt>Физика</dt><dd>60 FPS, детерминизм по seed</dd>
-                <dt>Таймаут</dt><dd>20 с</dd>
+                <dt>Map</dt><dd>12×12 cells, 4 m</dd>
+                <dt>Field of view</dt><dd>FOV 72°, range 26</dd>
+                <dt>Weapons</dt><dd>Pistol, bow, katana</dd>
+                <dt>Physics</dt><dd>60 FPS, deterministic by seed</dd>
+                <dt>Timeout</dt><dd>20 s</dd>
               </dl>
             </article>
 
             <article class="card">
-              <h3>Стек проекта</h3>
+              <h3>Project Stack</h3>
               <dl>
-                <dt>Симуляция</dt><dd>shared/simulation.js</dd>
-                <dt>Обучение</dt><dd>Node.js worker threads</dd>
-                <dt>Визуализация</dt><dd>Three.js</dd>
-                <dt>Экспорт</dt><dd>CSV + JSON протокол</dd>
+                <dt>Simulation</dt><dd>shared/simulation.js</dd>
+                <dt>Training</dt><dd>Node.js worker threads</dd>
+                <dt>Visualization</dt><dd>Three.js</dd>
+                <dt>Export</dt><dd>CSV + JSON protocol</dd>
               </dl>
             </article>
           </div>
 
-          <h3>Почему сеть маленькая?</h3>
+          <h3>Why is the network small?</h3>
           <p>
-            ES плохо масштабируется на миллионы параметров: каждая особь — отдельный полный
-            прогон матча. 28 входов описывают ситуацию явно (позиция, враг, стены), глубокая
-            свёрточная сеть не нужна. Малый MLP быстрее оценивается и проще анализировать
-            в панели «Нейросеть».
+            ES scales poorly to millions of parameters: each individual requires a full
+            match run. 28 inputs describe the situation explicitly (position, enemy, walls); a deep
+            convolutional network is not needed. A small MLP is evaluated faster and is easier to analyze
+            in the "Neural Network" panel.
           </p>
         </section>
 
         <!-- FITNESS -->
         <section id="fitness">
-          <h2>Функция приспособленности (fitness)</h2>
-          <p class="section-deck">Как одно число отражает качество поведения за матч.</p>
+          <h2>Fitness Function</h2>
+          <p class="section-deck">How a single number reflects behavioral quality over a match.</p>
 
           <p>
-            Fitness каждого агента — <strong>сумма</strong> наград и штрафов за эпизод.
-            Главный сигнал — победа или поражение, но без мелких бонусов агенты часто
-            «застревают» в ничьих.
+            Each agent's fitness is the <strong>sum</strong> of rewards and penalties for the episode.
+            The main signal is victory or defeat, but without small bonuses agents often
+            get "stuck" in draws.
           </p>
 
           <table>
             <thead>
               <tr>
-                <th>Событие</th>
-                <th>Значение</th>
-                <th>Комментарий</th>
+                <th>Event</th>
+                <th>Value</th>
+                <th>Comment</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Победа (убийство)</td>
-                <td>+12 + бонус скорости</td>
-                <td>Бонус: (20 − t<sub>убийства</sub>) × 2 — быстрая победа выгоднее</td>
+                <td>Victory (kill)</td>
+                <td>+12 + speed bonus</td>
+                <td>Bonus: (20 − t<sub>kill</sub>) × 2 — faster victory is more valuable</td>
               </tr>
               <tr>
-                <td>Поражение</td>
+                <td>Defeat</td>
                 <td>−12</td>
-                <td>HP упало до 0</td>
+                <td>HP dropped to 0</td>
               </tr>
               <tr>
-                <td>Ничья (таймаут)</td>
+                <td>Draw (timeout)</td>
                 <td>−5 … −13</td>
-                <td>Штраф растёт после 8-й секунды, чтобы не «сидеть» в углу</td>
+                <td>Penalty grows after the 8th second to discourage "camping" in a corner</td>
               </tr>
               <tr>
-                <td>Подбор оружия</td>
+                <td>Weapon pickup</td>
                 <td>+3</td>
-                <td>Один раз за матч</td>
+                <td>Once per match</td>
               </tr>
               <tr>
-                <td>Урон по врагу</td>
-                <td>+2.5 за 1 HP</td>
-                <td>Промежуточный сигнал до убийства</td>
+                <td>Damage to enemy</td>
+                <td>+2.5 per 1 HP</td>
+                <td>Intermediate signal before a kill</td>
               </tr>
               <tr>
-                <td>Новая клетка карты</td>
+                <td>New map cell</td>
                 <td>+0.08</td>
-                <td>Исследование; ×2 в первых 10 поколениях</td>
+                <td>Exploration; ×2 in the first 10 generations</td>
               </tr>
               <tr>
-                <td>Увидел оружие</td>
+                <td>Saw a weapon</td>
                 <td>+0.5</td>
-                <td>Хотя бы раз за матч</td>
+                <td>At least once per match</td>
               </tr>
               <tr>
-                <td>Движение</td>
-                <td>+0.012 / ед. пути</td>
-                <td>Потолок +1.2 за матч</td>
+                <td>Movement</td>
+                <td>+0.012 / unit of distance</td>
+                <td>Cap +1.2 per match</td>
               </tr>
               <tr>
-                <td>Упор в стену / угол / бездействие</td>
-                <td>штрафы за кадр</td>
-                <td>Анти-пассивность</td>
+                <td>Stuck on wall / corner / idle</td>
+                <td>per-frame penalties</td>
+                <td>Anti-passivity</td>
               </tr>
             </tbody>
           </table>
 
           <div class="callout warn">
-            <strong>Про reward shaping:</strong> мелкие бонусы — не «подсказка от разработчика»,
-            а стандартный приём, когда основная награда слишком редкая. Без них ES долго не
-            находит осмысленное поведение. Главный критерий успеха — рост побед и сокращение
-            времени до убийства у чемпионов.
+            <strong>About reward shaping:</strong> small bonuses are not a "hint from the developer,"
+            but a standard technique when the main reward is too sparse. Without them, ES takes a long time to
+            find meaningful behavior. The main success criterion is rising win rate and shorter
+            time to kill among champions.
           </div>
         </section>
 
-        <!-- ПРОТОКОЛ -->
+        <!-- PROTOCOL -->
         <section id="protocol">
-          <h2>Методологический протокол</h2>
-          <p class="section-deck">Что отличает исследование от «запустил и надеюсь».</p>
+          <h2>Methodological Protocol</h2>
+          <p class="section-deck">What distinguishes research from "run it and hope."</p>
 
           <div class="card-grid">
             <article class="card">
-              <h3>A. Случайный seed карты при обучении</h3>
+              <h3>A. Random map seed during training</h3>
               <p style="margin:0;font-size:0.9rem">
-                Каждый eval-матч — новая раскладка стен. Агент учится обобщать навигацию,
-                а не запоминать один лабиринт.
+                Each eval match uses a new wall layout. The agent learns to generalize navigation,
+                not memorize one maze.
               </p>
             </article>
             <article class="card">
-              <h3>B. Фиксированный seed при сравнении</h3>
+              <h3>B. Fixed seed during comparison</h3>
               <p style="margin:0;font-size:0.9rem">
-                A/B тест чекпоинтов использует <code>WORLD_SEED = 42</code> — одинаковая
-                среда для обоих претендентов.
+                A/B checkpoint testing uses <code>WORLD_SEED = 42</code> — the same
+                environment for both contenders.
               </p>
             </article>
             <article class="card">
-              <h3>C. Разделение eval и champion stats</h3>
+              <h3>C. Separation of eval and champion stats</h3>
               <p style="margin:0;font-size:0.9rem">
-                Матчи оценки популяции не попадают в win-rate на главной. Статистика UI —
-                только матчи лучших геномов.
+                Population evaluation matches do not count toward the main win rate. UI statistics —
+                only matches of the best genomes.
               </p>
             </article>
             <article class="card">
-              <h3>D. Чередование хода</h3>
+              <h3>D. Turn alternation</h3>
               <p style="margin:0;font-size:0.9rem">
-                В чётных кадрах первым действует синий, в нечётных — красный. Снижает
-                перекос «кто стрелял первым».
+                On even frames blue acts first, on odd frames — red. Reduces
+                bias from "who shot first."
               </p>
             </article>
             <article class="card">
-              <h3>E. Адаптивная мутация</h3>
+              <h3>E. Adaptive mutation</h3>
               <p style="margin:0;font-size:0.9rem">
-                При доминировании одной стороны (&gt;60% побед) проигрывающей повышают σ.
+                When one side dominates (&gt;60% wins), the losing side gets a higher σ.
               </p>
             </article>
             <article class="card">
-              <h3>F. Экспорт протокола</h3>
+              <h3>F. Protocol export</h3>
               <p style="margin:0;font-size:0.9rem">
-                CSV истории поколений и JSON с алгоритмом, архитектурой и fitness-моделью.
+                CSV of generation history and JSON with algorithm, architecture, and fitness model.
               </p>
             </article>
           </div>
 
-          <h3>Что приложить к отчёту</h3>
+          <h3>What to include in the report</h3>
           <ul>
-            <li><code>history.csv</code> — динамика fitness и win-rate по поколениям.</li>
-            <li><code>protocol.json</code> — полное описание эксперимента.</li>
-            <li>Скриншоты/реплеи лучших матчей и сравнения чекпоинтов (gen-50 vs gen-200).</li>
-            <li>Чекпоинты каждые 25 поколений (<code>data/checkpoints/gen-*.json</code>).</li>
+            <li><code>history.csv</code> — fitness and win-rate dynamics across generations.</li>
+            <li><code>protocol.json</code> — full experiment description.</li>
+            <li>Screenshots/replays of best matches and checkpoint comparison (gen-50 vs gen-200).</li>
+            <li>Checkpoints every 25 generations (<code>data/checkpoints/gen-*.json</code>).</li>
           </ul>
         </section>
 
-        <!-- РЕЗУЛЬТАТЫ -->
+        <!-- RESULTS -->
         <section id="results">
-          <h2>Ожидаемые результаты</h2>
-          <p class="section-deck">На что смотреть, чтобы показать, что проект работает.</p>
+          <h2>Expected Results</h2>
+          <p class="section-deck">What to look at to show that the project works.</p>
 
           <ul>
-            <li><strong>Рост среднего fitness</strong> чемпионов по поколениям (график на стенде).</li>
-            <li><strong>Снижение доли ничьих</strong> — агенты перестают «бояться» сражаться.</li>
-            <li><strong>Появление тактик:</strong> поиск оружия, обход стен, преследование видимого врага.</li>
-            <li><strong>Ускорение убийств</strong> — падает среднее время до первого kill (bestKillTimeMs).</li>
-            <li><strong>Чередование доминирования</strong> синих и красных — признак живой коэволюции, а не застоя.</li>
-            <li><strong>A/B чекпоинтов:</strong> более позднее поколение стабильно побеждает раннее на фиксированной карте.</li>
+            <li><strong>Rising average fitness</strong> of champions across generations (chart on the research stand).</li>
+            <li><strong>Lower draw rate</strong> — agents stop "being afraid" to fight.</li>
+            <li><strong>Emergence of tactics:</strong> weapon search, wall flanking, pursuit of a visible enemy.</li>
+            <li><strong>Faster kills</strong> — average time to first kill drops (bestKillTimeMs).</li>
+            <li><strong>Alternating dominance</strong> of blue and red — a sign of living coevolution, not stagnation.</li>
+            <li><strong>A/B checkpoints:</strong> a later generation consistently beats an earlier one on a fixed map.</li>
           </ul>
 
           <div class="callout">
-            <strong>Как формулировать вывод:</strong> «Разработан воспроизводимый стенд коэволюции
-            нейроагентов. Метод ES без градиента через среду обеспечивает измеримый прогресс
-            поведения в процедурной 3D-арене с частичной наблюдаемостью.»
+            <strong>How to phrase the conclusion:</strong> "A reproducible neuroagent coevolution stand was developed.
+            The ES method without gradient through the environment provides measurable behavioral progress
+            in a procedural 3D arena with partial observability."
           </div>
         </section>
 
-        <!-- ОГРАНИЧЕНИЯ -->
+        <!-- LIMITATIONS -->
         <section id="limitations">
-          <h2>Ограничения и дальнейшее развитие</h2>
-          <p class="section-deck">Честно назвать слабые места — плюс на защите, не минус.</p>
+          <h2>Limitations and Future Development</h2>
+          <p class="section-deck">Honestly naming weak points is a plus at defense, not a minus.</p>
 
           <ul>
-            <li><strong>Размер сети:</strong> ~2.5K параметров — потолок сложности поведения. Не ожидаем «человеческого» уровня игры.</li>
-            <li><strong>Sample efficiency:</strong> ES требует много матчей. Для продакшена это дороже, чем PPO на GPU.</li>
-            <li><strong>Shaping-зависимость:</strong> баланс наград влияет на стиль игры. Другие веса — другие тактики.</li>
-            <li><strong>Коэволюционные циклы:</strong> возможны «качели» — одна сторона доминирует, потом другая.</li>
-            <li><strong>2D-навигация:</strong> движение по плоскости XZ, без прыжков и вертикали.</li>
-            <li><strong>Один тип противника:</strong> зеркальный агент с той же архитектурой.</li>
+            <li><strong>Network size:</strong> ~2.5K parameters — a ceiling on behavioral complexity. Do not expect "human-level" play.</li>
+            <li><strong>Sample efficiency:</strong> ES requires many matches. For production this is more expensive than PPO on GPU.</li>
+            <li><strong>Shaping dependence:</strong> reward balance affects play style. Different weights — different tactics.</li>
+            <li><strong>Coevolutionary cycles:</strong> "swings" are possible — one side dominates, then the other.</li>
+            <li><strong>2D navigation:</strong> movement on the XZ plane, no jumping or verticality.</li>
+            <li><strong>One opponent type:</strong> mirror agent with the same architecture.</li>
           </ul>
 
-          <h3>Возможные улучшения</h3>
+          <h3>Possible improvements</h3>
           <ul>
-            <li>Гибрид ES + fine-tuning (например, обучение критика на реплеях).</li>
-            <li>Больше разнообразия карт и режимов (командный бой, несколько оружий сразу).</li>
-            <li>Сравнительный бенчмарк с PPO на той же среде (как отдельная работа).</li>
-            <li>Карты памяти / рекуррентные сети для долгосрочного планирования.</li>
+            <li>Hybrid ES + fine-tuning (e.g., training a critic on replays).</li>
+            <li>More map and mode variety (team combat, multiple weapons at once).</li>
+            <li>Comparative benchmark with PPO on the same environment (as a separate study).</li>
+            <li>Memory maps / recurrent networks for long-term planning.</li>
           </ul>
         </section>
 
-        <!-- ЗАЩИТА -->
+        <!-- DEFENSE -->
         <section id="defense">
-          <h2>Аргументы и контраргументы для защиты</h2>
+          <h2>Arguments and Counterarguments for Defense</h2>
           <p class="section-deck">
-            Типичные вопросы комиссии и готовые ответы. Сначала — возможное возражение,
-            затем — ваш ответ.
+            Typical committee questions and ready-made answers. First — a possible objection,
+            then — your response.
           </p>
 
           <article class="qa-block">
-            <div class="qa-question">«Почему не использовали нейросети глубже / RL как в современных играх?»</div>
+            <div class="qa-question">"Why didn't you use deeper neural networks / RL like in modern games?"</div>
             <div class="qa-answer">
               <div class="qa-counter">
-                <strong>Контраргумент</strong>
-                Глубокое RL (AlphaStar, OpenAI Five) — индустриальный стандарт, ES устарел.
+                <strong>Counterargument</strong>
+                Deep RL (AlphaStar, OpenAI Five) is the industry standard; ES is outdated.
               </div>
               <div class="qa-reply">
-                <strong>Ответ</strong>
-                Глубокое RL требует огромных ресурсов и дифференцируемого или эмулируемого
-                окружения. Наша цель — <em>исследовательский стенд</em> с прозрачной логикой,
-                а не SOTA в Dota 2. Среда на чистом JS недифференцируема, сеть мала (~2.5K
-                параметров), ES параллелится на CPU и даёт измеримый прогресс. Это осознанный
-                trade-off: воспроизводимость и понятность важнее масштаба.
+                <strong>Response</strong>
+                Deep RL requires enormous resources and a differentiable or emulated
+                environment. Our goal is a <em>research stand</em> with transparent logic,
+                not SOTA in Dota 2. The environment in pure JS is non-differentiable, the network is small (~2.5K
+                parameters), ES parallelizes on CPU and yields measurable progress. This is a deliberate
+                trade-off: reproducibility and clarity matter more than scale.
               </div>
             </div>
           </article>
 
           <article class="qa-block">
-            <div class="qa-question">«Это же просто игра. Какая научная ценность?»</div>
+            <div class="qa-question">"It's just a game. What's the scientific value?"</div>
             <div class="qa-answer">
               <div class="qa-counter">
-                <strong>Контраргумент</strong>
-                Игровой симулятор не имеет отношения к реальным задачам.
+                <strong>Counterargument</strong>
+                A game simulator has no relation to real-world tasks.
               </div>
               <div class="qa-reply">
-                <strong>Ответ</strong>
-                Боевые симуляторы — стандартный бенчмарк в multi-agent AI (см. ViZDoom, Pommerman,
-                Google Research Football). Наша среда моделирует реальные трудности: частичная
-                наблюдаемость, разреженная награда, недифференцируемая физика, адаптивный
-                противник. Ценность — в <em>методологии обучения</em>, которую можно перенести
-                на робототехнику, дронов, автономные системы в неизвестной среде.
+                <strong>Response</strong>
+                Combat simulators are a standard benchmark in multi-agent AI (see ViZDoom, Pommerman,
+                Google Research Football). Our environment models real difficulties: partial
+                observability, sparse reward, non-differentiable physics, adaptive
+                opponent. The value lies in the <em>training methodology</em>, which can be transferred
+                to robotics, drones, and autonomous systems in unknown environments.
               </div>
             </div>
           </article>
 
           <article class="qa-block">
-            <div class="qa-question">«Reward shaping — это не читерство? Вы сами подсказываете агенту, что делать.»</div>
+            <div class="qa-question">"Isn't reward shaping cheating? You're telling the agent what to do."</div>
             <div class="qa-answer">
               <div class="qa-counter">
-                <strong>Контраргумент</strong>
-                Искусственные бонусы искажают «настоящую» цель — победу.
+                <strong>Counterargument</strong>
+                Artificial bonuses distort the "true" goal — victory.
               </div>
               <div class="qa-reply">
-                <strong>Ответ</strong>
-                При редкой награде (убийство раз в 20 секунд) без shaping ES почти не учится —
-                это известная проблема sparse reward. Shaping-бонусы за исследование и оружие —
-                <em>мостик</em> к главной награде. Мы документируем все коэффициенты в
-                <code>FITNESS_MODEL</code> и экспортируем в JSON. Финальная метрика для отчёта —
-                win-rate и время убийства чемпионов, а не сумма мелких бонусов.
+                <strong>Response</strong>
+                With sparse reward (a kill once every 20 seconds), ES barely learns without shaping —
+                this is a known sparse reward problem. Shaping bonuses for exploration and weapons are a
+                <em>bridge</em> to the main reward. We document all coefficients in
+                <code>FITNESS_MODEL</code> and export them to JSON. The final metric for the report is
+                champion win rate and kill time, not the sum of small bonuses.
               </div>
             </div>
           </article>
 
           <article class="qa-block">
-            <div class="qa-question">«Как доказать, что результат не случайность?»</div>
+            <div class="qa-question">"How do you prove the result isn't random chance?"</div>
             <div class="qa-answer">
               <div class="qa-counter">
-                <strong>Контраргумент</strong>
-                Один удачный матч — не доказательство обучения.
+                <strong>Counterargument</strong>
+                One lucky match is not proof of learning.
               </div>
               <div class="qa-reply">
-                <strong>Ответ</strong>
-                Три уровня доказательств: (1) динамика по сотням поколений в CSV; (2) A/B
-                сравнение чекпоинтов на фиксированном seed — gen-200 бьёт gen-25; (3)
-                детерминизм симуляции — повторный матч с теми же весами даёт тот же результат.
-                Плюс unit-тесты физики и сети.
+                <strong>Response</strong>
+                Three levels of evidence: (1) dynamics over hundreds of generations in CSV; (2) A/B
+                checkpoint comparison on a fixed seed — gen-200 beats gen-25; (3)
+                simulation determinism — replaying a match with the same weights gives the same result.
+                Plus unit tests for physics and the network.
               </div>
             </div>
           </article>
 
           <article class="qa-block">
-            <div class="qa-question">«Почему две популяции эволюционируют отдельно, а не одна общая?»</div>
+            <div class="qa-question">"Why do two populations evolve separately, not one shared population?"</div>
             <div class="qa-answer">
               <div class="qa-counter">
-                <strong>Контраргумент</strong>
-                Зеркальная коэволюция (одна популяция, пары соперников) естественнее.
+                <strong>Counterargument</strong>
+                Mirror coevolution (one population, paired opponents) is more natural.
               </div>
               <div class="qa-reply">
-                <strong>Ответ</strong>
-                Мы используем схему «оценка против чемпиона» — классический coevolutionary
-                archive подход. Она стабильнее: каждый геном оценивается против одного сильного
-                оппонента, а не против случайного слабака из популяции. Две стороны симметричны
-                по архитектуре и гиперпараметрам — сравнение честное.
+                <strong>Response</strong>
+                We use an "evaluation against champion" scheme — a classic coevolutionary
+                archive approach. It is more stable: each genome is evaluated against one strong
+                opponent, not a random weakling from the population. Both sides are symmetric
+                in architecture and hyperparameters — a fair comparison.
               </div>
             </div>
           </article>
 
           <article class="qa-block">
-            <div class="qa-question">«ES же очень медленный — миллионы эпизодов?»</div>
+            <div class="qa-question">"Isn't ES very slow — millions of episodes?"</div>
             <div class="qa-answer">
               <div class="qa-counter">
-                <strong>Контраргумент</strong>
-                Sample efficiency у ES хуже, чем у PPO.
+                <strong>Counterargument</strong>
+                Sample efficiency of ES is worse than PPO.
               </div>
               <div class="qa-reply">
-                <strong>Ответ</strong>
-                Да, ES не sample-efficient — мы это признаём в ограничениях. Но матч длится
-                максимум 20 секунд симуляции, сеть крошечная, оценка идёт параллельно на
-                worker threads (до ~96 матчей одновременно). Для учебного исследования на
-                CPU этого достаточно: за ночь — сотни поколений. Параллелизм — сильная сторона ES.
+                <strong>Response</strong>
+                Yes, ES is not sample-efficient — we acknowledge this in the limitations. But a match lasts
+                at most 20 seconds of simulation, the network is tiny, evaluation runs in parallel on
+                worker threads (up to ~96 matches simultaneously). For academic research on
+                CPU this is enough: hundreds of generations overnight. Parallelism is a strong side of ES.
               </div>
             </div>
           </article>
 
           <article class="qa-block">
-            <div class="qa-question">«Зачем случайная карта при обучении, если сравнение на фиксированной?»</div>
+            <div class="qa-question">"Why a random map during training if comparison uses a fixed one?"</div>
             <div class="qa-answer">
               <div class="qa-counter">
-                <strong>Контраргумент</strong>
-                Противоречие: то random, то fixed.
+                <strong>Counterargument</strong>
+                Contradiction: sometimes random, sometimes fixed.
               </div>
               <div class="qa-reply">
-                <strong>Ответ</strong>
-                Это два разных режима с разными целями. При <em>обучении</em> random seed
-                заставляет обобщать навигацию. При <em>сравнении</em> поколений fixed seed
-                убирает влияние удачной раскладки стен — чистый тест «кто играет лучше».
-                Так делают в ML: train on distribution, evaluate on fixed benchmark.
+                <strong>Response</strong>
+                These are two different modes with different goals. During <em>training</em>, a random seed
+                forces generalization of navigation. During <em>generation comparison</em>, a fixed seed
+                removes the influence of a lucky wall layout — a clean test of "who plays better."
+                This is standard in ML: train on distribution, evaluate on fixed benchmark.
               </div>
             </div>
           </article>
 
           <article class="qa-block">
-            <div class="qa-question">«Агент видит только 28 чисел — разве этого хватит?»</div>
+            <div class="qa-question">"The agent only sees 28 numbers — is that enough?"</div>
             <div class="qa-answer">
               <div class="qa-counter">
-                <strong>Контраргумент</strong>
-                Нет пикселей с экрана — значит, нет «настоящего зрения».
+                <strong>Counterargument</strong>
+                No pixels from the screen — so no "real vision."
               </div>
               <div class="qa-reply">
-                <strong>Ответ</strong>
-                Это structured state — осознанное упрощение для учебного проекта. Аналог
-                lidar + game state в робототехнике. 28 признаков включают позицию, врага,
-                оружие и 8 лучей до стен — достаточно для тактики «найти оружие → выследить
-                → атаковать». Пиксельный ввод потребовал бы CNN и на порядок больше вычислений.
+                <strong>Response</strong>
+                This is structured state — a deliberate simplification for an academic project. Analogous to
+                lidar + game state in robotics. 28 features include position, enemy,
+                weapons, and 8 rays to walls — enough for the tactic "find weapon → track down
+                → attack." Pixel input would require a CNN and an order of magnitude more computation.
               </div>
             </div>
           </article>
 
           <article class="qa-block">
-            <div class="qa-question">«Что если агенты научатся только ничьим?»</div>
+            <div class="qa-question">"What if agents only learn to draw?"</div>
             <div class="qa-answer">
               <div class="qa-counter">
-                <strong>Контраргумент</strong>
-                Пассивная стратегия — локальный оптимум.
+                <strong>Counterargument</strong>
+                A passive strategy is a local optimum.
               </div>
               <div class="qa-reply">
-                <strong>Ответ</strong>
-                Именно поэтому в fitness: растущий штраф за таймаут после 8 секунды,
-                штрафы за бездействие, кемпинг в углу и шлифовку стен; бонус за движение
-                и исследование. В первых поколениях exploration ×2. На графике видно падение
-                draw-rate — это прямой ответ эксперименту.
+                <strong>Response</strong>
+                That is exactly why fitness includes: a growing timeout penalty after 8 seconds,
+                penalties for idleness, corner camping, and wall grinding; bonuses for movement
+                and exploration. In early generations exploration is ×2. The chart shows falling
+                draw rate — a direct answer to the experiment.
               </div>
             </div>
           </article>
 
           <article class="qa-block">
-            <div class="qa-question">«Можно ли повторить эксперимент на другом компьютере?»</div>
+            <div class="qa-question">"Can the experiment be repeated on another computer?"</div>
             <div class="qa-answer">
               <div class="qa-counter">
-                <strong>Контраргумент</strong>
-                Без Docker и облака воспроизводимость под вопросом.
+                <strong>Counterargument</strong>
+                Without Docker and the cloud, reproducibility is questionable.
               </div>
               <div class="qa-reply">
-                <strong>Ответ</strong>
-                Проект на Node.js без GPU: <code>npm install && npm run dev</code>. Все
-                гиперпараметры в <code>shared/config.js</code>, протокол экспортируется в JSON.
-                Симуляция детерминирована по seed. Чекпоинты каждые 25 поколений можно
-                поделиться отдельно. В отчёте — версия Node, скрин протокола, CSV истории.
+                <strong>Response</strong>
+                The project runs on Node.js without GPU: <code>npm install && npm run dev</code>. All
+                hyperparameters are in <code>shared/config.js</code>, the protocol exports to JSON.
+                Simulation is deterministic by seed. Checkpoints every 25 generations can be
+                shared separately. In the report — Node version, protocol screenshot, CSV history.
               </div>
             </div>
           </article>
         </section>
 
-        <!-- ГЛОССАРИЙ -->
+        <!-- GLOSSARY -->
         <section id="glossary">
-          <h2>Глоссарий</h2>
-          <p class="section-deck">Короткие определения терминов, которые могут спросить.</p>
+          <h2>Glossary</h2>
+          <p class="section-deck">Short definitions of terms that may come up.</p>
 
           <dl class="glossary">
-            <dt>Агент</dt>
-            <dd>Игровой персонаж, управляемый нейросетью. В проекте — синий или красный.</dd>
+            <dt>Agent</dt>
+            <dd>Game character controlled by a neural network. In the project — blue or red.</dd>
 
-            <dt>Эволюционные стратегии (ES)</dt>
-            <dd>Метод оптимизации весов нейросети через популяцию, отбор и мутацию без градиента через среду.</dd>
+            <dt>Evolution Strategies (ES)</dt>
+            <dd>Method for optimizing neural network weights through population, selection, and mutation without gradient through the environment.</dd>
 
-            <dt>Fitness (приспособленность)</dt>
-            <dd>Одно число — насколько хорошо геном отыграл матч. Чем выше, тем лучше.</dd>
+            <dt>Fitness</dt>
+            <dd>A single number — how well a genome played a match. Higher is better.</dd>
 
-            <dt>Геном</dt>
-            <dd>Все веса и смещения (biases) нейросети, задающие поведение агента.</dd>
+            <dt>Genome</dt>
+            <dd>All weights and biases of the neural network that define agent behavior.</dd>
 
-            <dt>Коэволюция</dt>
-            <dd>Одновременная эволюция двух популяций, где сила противника тоже растёт.</dd>
+            <dt>Coevolution</dt>
+            <dd>Simultaneous evolution of two populations, where opponent strength also grows.</dd>
 
             <dt>MLP</dt>
-            <dd>Многослойный перцептрон — простая полносвязная нейросеть.</dd>
+            <dd>Multilayer perceptron — a simple fully connected neural network.</dd>
 
-            <dt>Чемпион</dt>
-            <dd>Лучший геном текущего поколения. Против него оценивается популяция врага.</dd>
+            <dt>Champion</dt>
+            <dd>Best genome of the current generation. The enemy population is evaluated against it.</dd>
 
             <dt>Reward shaping</dt>
-            <dd>Дополнительные мелкие награды, помогающие обучению при редкой главной награде.</dd>
+            <dd>Additional small rewards that help learning when the main reward is sparse.</dd>
 
-            <dt>Seed (зерно генератора)</dt>
-            <dd>Число, от которого зависит раскладка карты. Одинаковый seed — одинаковая карта.</dd>
+            <dt>Seed</dt>
+            <dd>Number that determines the map layout. Same seed — same map.</dd>
 
-            <dt>Частичная наблюдаемость</dt>
-            <dd>Агент не видит всю карту — только конус 72° и то, что не закрыто стеной.</dd>
+            <dt>Partial observability</dt>
+            <dd>The agent does not see the whole map — only a 72° cone and what is not blocked by walls.</dd>
 
-            <dt>Детерминизм</dt>
-            <dd>При тех же входах (веса + seed) симуляция даёт тот же результат.</dd>
+            <dt>Determinism</dt>
+            <dd>With the same inputs (weights + seed), the simulation gives the same result.</dd>
 
-            <dt>Элитизм</dt>
-            <dd>Лучшие особи переходят в следующее поколение без изменений.</dd>
+            <dt>Elitism</dt>
+            <dd>Best individuals pass to the next generation unchanged.</dd>
           </dl>
         </section>
 
-        <!-- ИСТОЧНИКИ -->
+        <!-- SOURCES -->
         <section id="sources">
-          <h2>Теоретические источники</h2>
-          <p class="section-deck">На что можно сослаться в библиографии.</p>
+          <h2>Theoretical Sources</h2>
+          <p class="section-deck">References you can cite in the bibliography.</p>
 
           <ul>
             <li>
-              Salimans T. et al. «Evolution Strategies as a Scalable Alternative to
-              Reinforcement Learning» (2017) — ES для оптимизации политик.
+              Salimans T. et al. "Evolution Strategies as a Scalable Alternative to
+              Reinforcement Learning" (2017) — ES for policy optimization.
             </li>
             <li>
-              Stanley K., Miikkulainen R. «Evolving Neural Networks through Augmenting
-              Topologies» (NEAT, 2002) — классика нейроэволюции.
+              Stanley K., Miikkulainen R. "Evolving Neural Networks through Augmenting
+              Topologies" (NEAT, 2002) — neuroevolution classic.
             </li>
             <li>
-              Rosin C., Belew R. «New Methods for Competitive Coevolution» (1997) —
-              коэволюция и функции приспособленности.
+              Rosin C., Belew R. "New Methods for Competitive Coevolution" (1997) —
+              coevolution and fitness functions.
             </li>
             <li>
-              Sutton R., Barto A. «Reinforcement Learning: An Introduction» — база по RL
-              для сравнения в разделе «почему не PPO».
+              Sutton R., Barto A. "Reinforcement Learning: An Introduction" — RL fundamentals
+              for comparison in the "why not PPO" section.
             </li>
             <li>
-              Kempka M. et al. «ViZDoom: A Doom-based AI Research Platform» — игровые
-              бенчмарки для боевых агентов.
+              Kempka M. et al. "ViZDoom: A Doom-based AI Research Platform" — game
+              benchmarks for combat agents.
             </li>
           </ul>
 
           <div class="callout limit">
-            <strong>Для слайдов:</strong> не перегружайте защиту формулами. Достаточно слов:
-            «популяция → оценка → отбор лучших → мутация → новое поколение» и таблицы
-            сравнения ES vs RL из этого документа.
+            <strong>For slides:</strong> do not overload the defense with formulas. It is enough to say:
+            "population → evaluation → select the best → mutation → new generation" and use the
+            ES vs RL comparison table from this document.
           </div>
         </section>
 
         <footer class="footer">
-          <p>TopGun Research · Теоретическая часть для университетской защиты</p>
-          <p>Стенд проекта: <code>npm run dev</code> → research.html · Экспорт: вкладка «Данные»</p>
+          <p>TopGun Research · Theoretical part for university defense</p>
+          <p>Project stand: <code>npm run dev</code> → research.html · Export: "Data" tab</p>
         </footer>
       </main>
     </div>

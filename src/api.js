@@ -110,7 +110,7 @@ export function formatKillTime(ms) {
   if (!ms && ms !== 0) return "—";
   const sec = Math.floor(ms / 1000);
   const rem = ms % 1000;
-  return `${sec}.${String(rem).padStart(3, "0")} с`;
+  return `${sec}.${String(rem).padStart(3, "0")} s`;
 }
 
 export function formatPct(v) {
@@ -119,12 +119,12 @@ export function formatPct(v) {
 }
 
 export function formatDuration(ms) {
-  if (!ms) return "0 с";
+  if (!ms) return "0 s";
   const s = Math.floor(ms / 1000);
-  if (s < 60) return `${s} с`;
+  if (s < 60) return `${s} s`;
   const m = Math.floor(s / 60);
   const rs = s % 60;
-  if (m < 60) return `${m} м ${rs} с`;
+  if (m < 60) return `${m} m ${rs} s`;
   const h = Math.floor(m / 60);
-  return `${h} ч ${m % 60} м`;
+  return `${h} h ${m % 60} m`;
 }

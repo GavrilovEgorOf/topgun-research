@@ -291,7 +291,7 @@ export function createBulletTrail() {
 export function createSlashEffect(color, arcHalf) {
   const inner = 0.38;
   const outer = 2.05;
-  // После rotation.x = -π/2 мировая Z = -sin(θ); вперёд (+Z) соответствует θ = -π/2
+  // After rotation.x = -π/2 world Z = -sin(θ); forward (+Z) corresponds to θ = -π/2
   const thetaStart = -Math.PI / 2 - arcHalf;
   const thetaLen = arcHalf * 2;
   const arcGeo = new THREE.RingGeometry(inner, outer, 28, 1, thetaStart, thetaLen);

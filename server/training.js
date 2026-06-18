@@ -662,7 +662,7 @@ export class TrainingEngine {
       histA,
       histB,
       match: {
-        label: `Синий G${genA} vs Синий G${genB}`,
+        label: `Blue G${genA} vs Blue G${genB}`,
         winner: result.winner,
         reason: result.reason,
         time: result.time,

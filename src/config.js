@@ -1,4 +1,4 @@
-/** Визуальные константы клиента; физика и симуляция — в shared/config.js */
+/** Client visual constants; physics and simulation — in shared/config.js */
 export {
   MAP_SIZE,
   CELL_SIZE,

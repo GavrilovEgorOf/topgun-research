@@ -19,14 +19,14 @@ export const BRAIN_THEME = {
   font: '"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
 };
 
-/** 6 осей радара — агрегаты 28 входов (читаемо, как в демо Chart.js) */
+/** 6 radar axes — aggregates of 28 inputs (readable, like Chart.js demo) */
 export const OBS_GROUPS = [
-  { label: "Позиция", indices: [0, 1, 2, 3] },
-  { label: "Статус", indices: [4, 5, 6, 7] },
-  { label: "Враг", indices: [8, 9, 10, 11, 12] },
-  { label: "Оружие", indices: [13, 14, 15, 16, 17] },
-  { label: "Луч", indices: [18, 19] },
-  { label: "Стены", indices: [20, 21, 22, 23, 24, 25, 26, 27] },
+  { label: "Position", indices: [0, 1, 2, 3] },
+  { label: "Status", indices: [4, 5, 6, 7] },
+  { label: "Enemy", indices: [8, 9, 10, 11, 12] },
+  { label: "Weapon", indices: [13, 14, 15, 16, 17] },
+  { label: "Ray", indices: [18, 19] },
+  { label: "Walls", indices: [20, 21, 22, 23, 24, 25, 26, 27] },
 ];
 
 export function normObsValue(v) {

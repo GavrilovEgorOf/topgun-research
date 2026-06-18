@@ -175,7 +175,7 @@ export function wallRayDist(ox, oz, angle, colliders, maxRange) {
   return dist / maxRange;
 }
 
-/** Сколько лучей впереди упираются в стену вплотную (угол/стык) */
+/** How many forward rays hit a wall at close range (corner/junction) */
 export function countCloseForwardWalls(ox, oz, rotation, colliders, maxRange) {
   let n = 0;
   for (const offset of [-0.55, -0.28, 0, 0.28, 0.55]) {

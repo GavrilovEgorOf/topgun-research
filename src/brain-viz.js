@@ -156,7 +156,7 @@ export function initBrainPanel(root) {
     if (!layer?.weights?.length) {
       chart.data.datasets[0].data = [];
       if (heatmapMeta) {
-        heatmapMeta.innerHTML = `<span class="heatmap-meta-item">Нет данных слоя</span>`;
+        heatmapMeta.innerHTML = `<span class="heatmap-meta-item">No layer data</span>`;
       }
       chart.update("active");
       return;
@@ -187,9 +187,9 @@ export function initBrainPanel(root) {
     chart.data.datasets[0]._matrixCols = cols;
     if (heatmapMeta) {
       heatmapMeta.innerHTML = `
-        <span class="heatmap-meta-item"><strong>${cols} × ${rows}</strong> матрица</span>
+        <span class="heatmap-meta-item"><strong>${cols} × ${rows}</strong> matrix</span>
         <span class="heatmap-meta-item">|w|<sub>max</sub> ${absMax.toFixed(3)}</span>
-        <span class="heatmap-meta-item">${layer.weights.length.toLocaleString("ru")} весов</span>
+        <span class="heatmap-meta-item">${layer.weights.length.toLocaleString("en")} weights</span>
       `;
     }
     chart.update("active");
@@ -248,7 +248,7 @@ function createRadarChart(canvas) {
       labels,
       datasets: [
         {
-          label: "Базовый уровень",
+          label: "Baseline",
           data: baseline,
           borderColor: "rgba(60, 60, 67, 0.22)",
           backgroundColor: "rgba(60, 60, 67, 0.04)",
@@ -260,7 +260,7 @@ function createRadarChart(canvas) {
           order: 2,
         },
         {
-          label: "Наблюдения",
+          label: "Observations",
           data: labels.map(() => 0),
           _side: "blue",
           borderColor: colors.stroke,
@@ -295,8 +295,8 @@ function createRadarChart(canvas) {
           ...appleTooltip(),
           filter: (item) => item.datasetIndex === 1,
           callbacks: {
-            title: (items) => OBS_GROUPS[items[0]?.dataIndex]?.label ?? "Наблюдения",
-            label: (ctx) => ` Интенсивность: ${(Number(ctx.raw) * 100).toFixed(0)}%`,
+            title: (items) => OBS_GROUPS[items[0]?.dataIndex]?.label ?? "Observations",
+            label: (ctx) => ` Intensity: ${(Number(ctx.raw) * 100).toFixed(0)}%`,
             afterBody: (items) => {
               const idx = items[0]?.dataIndex;
               const obs = items[0]?.chart?.$observations;
@@ -324,7 +324,7 @@ function createOutputChart(canvas) {
       datasets: [
         {
           type: "bar",
-          label: "Выход",
+          label: "Output",
           data: [],
           backgroundColor: (ctx) => {
             const v = Number(ctx.raw) || 0;
@@ -341,7 +341,7 @@ function createOutputChart(canvas) {
         },
         {
           type: "line",
-          label: "Порог",
+          label: "Threshold",
           data: [],
           borderColor: BRAIN_THEME.orange,
           borderWidth: 2,
@@ -381,7 +381,7 @@ function createOutputChart(canvas) {
           callbacks: {
             label: (ctx) => {
               const thr = OUTPUT_THRESHOLDS[ctx.dataIndex];
-              const hit = ctx.raw >= thr ? "✓ активно" : "ниже порога";
+              const hit = ctx.raw >= thr ? "✓ active" : "below threshold";
               return ` ${ctx.raw.toFixed(3)} · ${hit}`;
             },
           },
@@ -400,7 +400,7 @@ function createActivationHeatmap(canvas) {
     data: {
       datasets: [
         {
-          label: "Активация",
+          label: "Activation",
           data: [],
           borderWidth: 0,
           borderRadius: 2,
@@ -432,7 +432,7 @@ function createActivationHeatmap(canvas) {
           },
           title: {
             display: true,
-            text: "Нейрон",
+            text: "Neuron",
             font: font(10, "500"),
             color: BRAIN_THEME.textMuted,
             padding: { top: 4 },
@@ -453,8 +453,8 @@ function createActivationHeatmap(canvas) {
             stepSize: 1,
             callback: (v) => {
               const n = Number(v);
-              if (n === 0) return "Слой 1";
-              if (n === 1) return "Слой 2";
+              if (n === 0) return "Layer 1";
+              if (n === 1) return "Layer 2";
               return "";
             },
           },
@@ -468,7 +468,7 @@ function createActivationHeatmap(canvas) {
             title: (items) => {
               const p = items[0]?.raw;
               if (!p) return "";
-              return `Слой ${p.y + 1} · нейрон ${p.x}`;
+              return `Layer ${p.y + 1} · neuron ${p.x}`;
             },
             label: (ctx) => ` ${Number(ctx.raw.v).toFixed(3)}`,
           },
@@ -485,7 +485,7 @@ function createWeightHeatmap(canvas) {
     data: {
       datasets: [
         {
-          label: "Вес",
+          label: "Weight",
           data: [],
           borderWidth: 0,
           borderRadius: 3,
@@ -527,7 +527,7 @@ function createWeightHeatmap(canvas) {
           },
           title: {
             display: true,
-            text: "Входной нейрон",
+            text: "Input neuron",
             font: font(11, "500"),
             color: BRAIN_THEME.text,
             padding: { top: 6 },
@@ -550,7 +550,7 @@ function createWeightHeatmap(canvas) {
           },
           title: {
             display: true,
-            text: "Выходной нейрон",
+            text: "Output neuron",
             font: font(11, "500"),
             color: BRAIN_THEME.text,
             padding: { bottom: 4 },
@@ -565,14 +565,14 @@ function createWeightHeatmap(canvas) {
             title: (items) => {
               const p = items[0]?.raw;
               if (!p) return "";
-              return `Нейрон ${p.y} ← вход ${p.x}`;
+              return `Neuron ${p.y} ← input ${p.x}`;
             },
             label: (ctx) => {
               const max = ctx.dataset._weightMax || 1;
               const v = ctx.raw.v;
               const pct = max > 0 ? ((Math.abs(v) / max) * 100).toFixed(0) : 0;
               const sign = v >= 0 ? "+" : "";
-              return ` ${sign}${v.toFixed(4)} (${pct}% от |max|)`;
+              return ` ${sign}${v.toFixed(4)} (${pct}% of |max|)`;
             },
           },
         },
@@ -590,7 +590,7 @@ export function renderWeightStatsPanel(el, { arch, layers } = {}) {
   if (!el) return;
   const ls = layers ?? [];
   if (!ls.length && !arch) {
-    el.innerHTML = `<p class="brain-stats-empty">Нет данных о весах</p>`;
+    el.innerHTML = `<p class="brain-stats-empty">No weight data</p>`;
     return;
   }
 
@@ -598,8 +598,8 @@ export function renderWeightStatsPanel(el, { arch, layers } = {}) {
 
   const paramsBlock = arch?.parameters
     ? `<div class="brain-stats-hero">
-        <span class="brain-stats-hero-value">${arch.parameters.toLocaleString("ru")}</span>
-        <span class="brain-stats-hero-label">Параметров в сети</span>
+        <span class="brain-stats-hero-value">${arch.parameters.toLocaleString("en")}</span>
+        <span class="brain-stats-hero-label">Network parameters</span>
       </div>
       <div class="inset-separator"></div>`
     : "";
@@ -611,7 +611,7 @@ export function renderWeightStatsPanel(el, { arch, layers } = {}) {
       const max = l.maxAbs ?? mean;
       return `<div class="brain-layer-row">
         <div class="brain-layer-head">
-          <span class="brain-layer-name">Слой ${l.layer + 1}</span>
+          <span class="brain-layer-name">Layer ${l.layer + 1}</span>
           <span class="brain-layer-dim">${l.in} → ${l.out}</span>
         </div>
         <div class="brain-metric-grid">
@@ -644,7 +644,7 @@ function updateLayerSelect(select, layers, current) {
   select.innerHTML = layers
     .map(
       (l, i) =>
-        `<option value="${i}">Слой ${i + 1}: ${l.inSize} → ${l.outSize}</option>`
+        `<option value="${i}">Layer ${i + 1}: ${l.inSize} → ${l.outSize}</option>`
     )
     .join("");
   select.value = String(current ?? 0);
@@ -663,7 +663,7 @@ export function renderBrainStats(el, summary, arch) {
 export function renderFitnessBreakdown(el, lines, model) {
   if (!el) return;
   if (!lines?.length) {
-    el.innerHTML = '<p class="muted">Нет данных последнего матча чемпионов</p>';
+    el.innerHTML = '<p class="muted">No data from the last champion match</p>';
     return;
   }
   el.innerHTML = lines
@@ -671,7 +671,7 @@ export function renderFitnessBreakdown(el, lines, model) {
       const m = model[line.key];
       const sign = line.amount > 0 ? "+" : "";
       const cls = line.amount > 0 ? "pos" : line.amount < 0 ? "neg" : "";
-      const team = line.side === "blue" ? "Синий" : "Красный";
+      const team = line.side === "blue" ? "Blue" : "Red";
       return `<div class="reward-row fitness-row">
         <span class="reward-name">${team} · ${m?.label ?? line.key}</span>
         <span class="reward-value ${cls}">${sign}${line.amount.toFixed(2)}</span>
@@ -693,20 +693,20 @@ export function renderCompareTable(el, data) {
 
   el.innerHTML = `
     <table class="compare-table">
-      <thead><tr><th>Метрика</th><th>G${genA}</th><th>G${genB}</th></tr></thead>
+      <thead><tr><th>Metric</th><th>G${genA}</th><th>G${genB}</th></tr></thead>
       <tbody>
         ${row("Fitness μ", fmt(histA?.blueFitness), fmt(histB?.blueFitness))}
-        ${row("Подбор оружия", fmt(histA?.bluePickupPct, true), fmt(histB?.bluePickupPct, true))}
-        ${row("Убийства", fmt(histA?.blueKillRate, true), fmt(histB?.blueKillRate, true))}
-        ${row("|w|̄ слой 1", fmt(data.brainA?.layerStats?.[0]?.meanAbs), fmt(data.brainB?.layerStats?.[0]?.meanAbs))}
+        ${row("Weapon pickup", fmt(histA?.bluePickupPct, true), fmt(histB?.bluePickupPct, true))}
+        ${row("Kills", fmt(histA?.blueKillRate, true), fmt(histB?.blueKillRate, true))}
+        ${row("|w|̄ layer 1", fmt(data.brainA?.layerStats?.[0]?.meanAbs), fmt(data.brainB?.layerStats?.[0]?.meanAbs))}
       </tbody>
     </table>
     <div class="compare-match-result">
-      <p><strong>Матч:</strong> ${match.label}</p>
-      <p><strong>Исход:</strong> ${
+      <p><strong>Match:</strong> ${match.label}</p>
+      <p><strong>Outcome:</strong> ${
         match.reason === "kill"
-          ? `Победа ${match.winner === "blue" ? "G" + genA : "G" + genB} за ${(match.killTimeMs / 1000).toFixed(3)} с`
-          : "Ничья (таймаут)"
+          ? `G${match.winner === "blue" ? genA : genB} wins in ${(match.killTimeMs / 1000).toFixed(3)} s`
+          : "Draw (timeout)"
       }</p>
       <p><strong>Fitness:</strong> G${genA} ${fmt(match.blueFitness)} · G${genB} ${fmt(match.redFitness)}</p>
     </div>
