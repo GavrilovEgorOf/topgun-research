@@ -1,10 +1,14 @@
 # TopGun Research
 
 [![CI](https://github.com/GavrilovEgorOf/topgun-research/actions/workflows/ci.yml/badge.svg)](https://github.com/GavrilovEgorOf/topgun-research/actions/workflows/ci.yml)
+[![Live Demo](https://img.shields.io/badge/demo-live-0ea5e9)](https://gavrilovegorof.github.io/topgun-research/demo.html)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-> Двухагентная 3D-арена с обучением нейросетей методом **эволюционных стратегий** — исследовательский стенд с live-визуализацией, реплеями и экспортом данных для отчёта.
+> **EN:** A procedural 3D combat arena where two neural agents **co-evolve via Evolution Strategies** (no backprop). Includes a deterministic simulator, Node.js training server with worker threads, Three.js research dashboard, WebSocket live feed, replay system, and a static demo on GitHub Pages.
 
-**EN:** A procedural 3D combat arena where two neural agents co-evolve via Evolution Strategies. Includes a Three.js research dashboard, WebSocket live feed, replay system, and reproducible headless simulation.
+> **RU:** Двухагентная 3D-арена с обучением нейросетей методом эволюционных стратегий — исследовательский стенд с live-визуализацией, реплеями и экспортом данных.
+
+**Try it:** [Live demo](https://gavrilovegorof.github.io/topgun-research/demo.html) — no install required.
 
 ## Demo
 
@@ -154,12 +158,10 @@ TopGun/
 └── research.html     # Полный стенд
 ```
 
-## Лицензия
+## License
 
 [MIT](LICENSE)
 
 ---
 
-### English summary
-
-**TopGun Research** trains two competing neural agents in a procedural 3D arena using **Evolution Strategies** (no backprop). The repo includes a shared deterministic simulator, a Node.js training server with worker threads, a Three.js research UI with brain visualization, unit tests, CI, and a **static demo** for GitHub Pages. Open `demo.html` to watch a recorded champion match, inspect network activations, and compare checkpoints G100 vs G400 in the browser.
+**Author:** [Egor Gavrilov](https://github.com/GavrilovEgorOf) · Python Backend / ML / Platform Engineering · Open to remote EU/US
