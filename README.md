@@ -1,23 +1,23 @@
 # TopGun Research
 
 [![CI](https://github.com/GavrilovEgorOf/topgun-research/actions/workflows/ci.yml/badge.svg)](https://github.com/GavrilovEgorOf/topgun-research/actions/workflows/ci.yml)
-[![Live Demo](https://img.shields.io/badge/demo-live-0ea5e9)](https://gavrilovegorof.github.io/topgun-research/demo.html)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/demo-live-GitHub%20Pages-blue)](https://gavrilovegorof.github.io/topgun-research/demo.html)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-> **EN:** A procedural 3D combat arena where two neural agents **co-evolve via Evolution Strategies** (no backprop). Includes a deterministic simulator, Node.js training server with worker threads, Three.js research dashboard, WebSocket live feed, replay system, and a static demo on GitHub Pages.
+> **EN:** A procedural 3D combat arena where two neural agents co-evolve via **Evolution Strategies** (no backprop). Includes a Three.js research dashboard, WebSocket live feed, replay system, worker-thread training, and reproducible headless simulation.
 
 > **RU:** Двухагентная 3D-арена с обучением нейросетей методом эволюционных стратегий — исследовательский стенд с live-визуализацией, реплеями и экспортом данных.
 
-**Try it:** [Live demo](https://gavrilovegorof.github.io/topgun-research/demo.html) — no install required.
+**Why it matters:** end-to-end ML research product — deterministic simulator, parallel fitness evaluation, real-time observability, static portfolio demo, CI, and architecture docs. Good fit for ML / fullstack / platform engineering portfolios.
 
 ## Demo
 
-| Страница | URL |
-|----------|-----|
-| **Online demo** (статика, без установки) | https://gavrilovegorof.github.io/topgun-research/demo.html |
-| Лендинг | http://localhost:8080 |
-| Исследовательский стенд (live) | http://localhost:8080/research.html |
-| Теория (защита / отчёт) | http://localhost:8080/theory_for_uni/ |
+| Page | URL |
+|------|-----|
+| **Live demo** (static, no install) | https://gavrilovegorof.github.io/topgun-research/demo.html |
+| Landing (local) | http://localhost:8080 |
+| Research dashboard (local) | http://localhost:8080/research.html |
+| Theory / report (local) | http://localhost:8080/theory_for_uni/ |
 
 ![Landing hero](docs/screenshots/landing-hero.png)
 
@@ -158,10 +158,12 @@ TopGun/
 └── research.html     # Полный стенд
 ```
 
-## License
+## Лицензия
 
 [MIT](LICENSE)
 
 ---
 
-**Author:** [Egor Gavrilov](https://github.com/GavrilovEgorOf) · Python Backend / ML / Platform Engineering · Open to remote EU/US
+### English summary
+
+**TopGun Research** trains two competing neural agents in a procedural 3D arena using **Evolution Strategies** (no backprop). The repo includes a shared deterministic simulator, a Node.js training server with worker threads, a Three.js research UI with brain visualization, unit tests, CI, and a **static demo** for GitHub Pages. Open `demo.html` to watch a recorded champion match, inspect network activations, and compare checkpoints G100 vs G400 in the browser.
