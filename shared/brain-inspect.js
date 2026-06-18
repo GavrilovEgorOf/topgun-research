@@ -110,7 +110,7 @@ function formatActionLabels(actions, outputs) {
       parts.push(`${labels[i]} (${outputs[i].toFixed(2)} ≥ ${thr})`);
     }
   });
-  return parts.length ? parts.join(", ") : `нет (${outputs.map((v) => v.toFixed(2)).join(", ")})`;
+  return parts.length ? parts.join(", ") : `none (${outputs.map((v) => v.toFixed(2)).join(", ")})`;
 }
 
 export function summarizeBrain(net) {

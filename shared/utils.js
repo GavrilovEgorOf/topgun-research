@@ -38,7 +38,7 @@ export function normalizeAngle(a) {
   return a;
 }
 
-/** Случайный seed генерации карты (1 … 2³¹−1) */
+/** Random map generation seed (1 … 2³¹−1) */
 export function randomMapSeed(rng = Math.random) {
   return Math.floor(rng() * 0x7fffffff) + 1;
 }

@@ -114,7 +114,7 @@ export class ReplayGame {
       this.frameTimer = 0;
     }
     if (this.badgeEl) {
-      this.badgeEl.textContent = enabled ? "Live" : "Реплей";
+      this.badgeEl.textContent = enabled ? "Live" : "Replay";
       this.badgeEl.classList.toggle("live", enabled);
     }
   }

@@ -44,7 +44,7 @@ function fillCheckpointSelects(checkpoints, genA, genB, currentGen) {
   for (const sel of [genA, genB]) {
     if (!sel) continue;
     const prev = sel.value;
-    sel.innerHTML = opts || '<option value="">Нет чекпоинтов</option>';
+    sel.innerHTML = opts || '<option value="">No checkpoints</option>';
     if (prev && sel.querySelector(`option[value="${prev}"]`)) sel.value = prev;
   }
 
@@ -71,7 +71,7 @@ export function initPanel(api, onReplaySelect, onLive, onBrainUpdate, onCompareR
       if (el) {
         el.classList.add("disabled-link");
         el.removeAttribute("href");
-        el.title = "Доступно только при локальном запуске с сервером обучения";
+        el.title = "Available only when running locally with the training server";
       }
     }
   }
@@ -105,14 +105,14 @@ export function initPanel(api, onReplaySelect, onLive, onBrainUpdate, onCompareR
     select.innerHTML = "";
 
     if (!replays?.length) {
-      list.innerHTML = '<p class="muted">Нет сохранённых матчей с рекордным временем</p>';
+      list.innerHTML = '<p class="muted">No record-time matches saved</p>';
       return;
     }
 
     for (const r of replays) {
       const opt = document.createElement("option");
       opt.value = r.id;
-      opt.textContent = `#${r.id} · ${formatKillTime(r.killTimeMs)} · ${r.winner === "blue" ? "Синий" : "Красный"}`;
+      opt.textContent = `#${r.id} · ${formatKillTime(r.killTimeMs)} · ${r.winner === "blue" ? "Blue" : "Red"}`;
       select.appendChild(opt);
 
       const item = document.createElement("button");
@@ -120,7 +120,7 @@ export function initPanel(api, onReplaySelect, onLive, onBrainUpdate, onCompareR
       item.className = "replay-item";
       item.innerHTML = `<span class="replay-main">
           <span class="replay-time">${formatKillTime(r.killTimeMs)}</span>
-          <span class="replay-meta">#${r.id} · ${r.winner === "blue" ? "Синий" : "Красный"}</span>
+          <span class="replay-meta">#${r.id} · ${r.winner === "blue" ? "Blue" : "Red"}</span>
         </span>
         <span class="replay-chevron" aria-hidden="true">›</span>`;
       item.addEventListener("click", () => {
@@ -141,16 +141,16 @@ export function initPanel(api, onReplaySelect, onLive, onBrainUpdate, onCompareR
 
   api.onStatus((s) => {
     const championGames = s.championGames ?? s.totalGames ?? 0;
-    $("stat-total").textContent = championGames.toLocaleString("ru");
+    $("stat-total").textContent = championGames.toLocaleString("en");
     $("stat-kill-rate").textContent = formatPct(s.killRate ?? 0);
     $("stat-visible-kill").textContent = formatPct(s.visibleKillRate ?? 0);
     $("stat-weapon-sight").textContent = formatPct(s.weaponSightRate ?? 0);
     $("stat-best").textContent = s.bestKillTimeMs ? formatKillTime(s.bestKillTimeMs) : "—";
     $("stat-avg-kill").textContent =
-      s.avgKillTimeMs != null ? formatKillTime(s.avgKillTimeMs) : "нет убийств";
-    $("stat-blue-wins").textContent = (s.blueWins ?? 0).toLocaleString("ru");
-    $("stat-red-wins").textContent = (s.redWins ?? 0).toLocaleString("ru");
-    $("stat-draws").textContent = (s.draws ?? 0).toLocaleString("ru");
+      s.avgKillTimeMs != null ? formatKillTime(s.avgKillTimeMs) : "no kills";
+    $("stat-blue-wins").textContent = (s.blueWins ?? 0).toLocaleString("en");
+    $("stat-red-wins").textContent = (s.redWins ?? 0).toLocaleString("en");
+    $("stat-draws").textContent = (s.draws ?? 0).toLocaleString("en");
     updateWinBar(s);
 
     const lg = s.lastGen ?? s.history?.[s.history.length - 1];
@@ -168,16 +168,16 @@ export function initPanel(api, onReplaySelect, onLive, onBrainUpdate, onCompareR
     $("red-actions").textContent = s.redActions ?? "—";
 
     $("stat-draw-rate").textContent = formatPct(s.drawRate ?? 0);
-    $("stat-eval-games").textContent = (s.evalGames ?? 0).toLocaleString("ru");
-    $("stat-parallel").textContent = `${s.parallelGames ?? "—"} × ${s.workerCount ?? "—"} потоков`;
-    $("stat-gens").textContent = (s.generationsTotal ?? s.generation ?? 0).toLocaleString("ru");
+    $("stat-eval-games").textContent = (s.evalGames ?? 0).toLocaleString("en");
+    $("stat-parallel").textContent = `${s.parallelGames ?? "—"} × ${s.workerCount ?? "—"} workers`;
+    $("stat-gens").textContent = (s.generationsTotal ?? s.generation ?? 0).toLocaleString("en");
     $("stat-checkpoints").textContent = s.checkpointsCount ?? 0;
     $("stat-replays-count").textContent = s.replaysCount ?? 0;
     $("stat-uptime").textContent = formatDuration(s.sessionUptimeMs ?? 0);
 
     const arch = s.architecture;
     $("stat-architecture").textContent = arch
-      ? `${arch.layers.join("→")} · ${arch.parameters} пар.`
+      ? `${arch.layers.join("→")} · ${arch.parameters} params`
       : "—";
 
     renderFitnessBreakdown($("fitness-breakdown"), s.lastChampionBreakdown, FITNESS_MODEL);
@@ -212,7 +212,7 @@ export function initPanel(api, onReplaySelect, onLive, onBrainUpdate, onCompareR
   $("btn-rollback")?.addEventListener("click", async () => {
     const id = Number($("replay-select").value);
     if (!id) return;
-    if (!confirm(`Откатить обе сети до состояния матча #${id}?`)) return;
+    if (!confirm(`Roll back both networks to match #${id} state?`)) return;
     await api.rollback(id);
   });
 
@@ -221,14 +221,14 @@ export function initPanel(api, onReplaySelect, onLive, onBrainUpdate, onCompareR
     const genB = Number($("compare-gen-b").value);
     if (!genA || !genB) return;
     const el = $("compare-result");
-    el.innerHTML = '<p class="muted muted-inset">Запуск матча…</p>';
+    el.innerHTML = '<p class="muted muted-inset">Running match…</p>';
     try {
       const data = await api.compareGenerations(genA, genB);
       lastCompareMatch = data;
       renderCompareTable(el, data);
       $("btn-compare-watch").disabled = !data?.match?.frames?.length;
     } catch {
-      el.innerHTML = '<p class="muted muted-inset">Ошибка сравнения</p>';
+      el.innerHTML = '<p class="muted muted-inset">Comparison failed</p>';
     }
   });
 
@@ -240,7 +240,7 @@ export function initPanel(api, onReplaySelect, onLive, onBrainUpdate, onCompareR
   $("btn-zero")?.addEventListener("click", async () => {
     if (
       !confirm(
-        "Сбор весов: обнулить все веса обеих нейросетей и сбросить всю статистику?\n\nОбучение начнётся с нуля (веса = 0)."
+        "Zero weights: reset all weights of both networks and clear all statistics?\n\nTraining will restart from scratch (weights = 0)."
       )
     ) {
       return;
@@ -249,7 +249,7 @@ export function initPanel(api, onReplaySelect, onLive, onBrainUpdate, onCompareR
     chart.update([]);
   });
   $("btn-reset")?.addEventListener("click", async () => {
-    if (!confirm("Сбросить обучение: случайные веса, статистика и история?")) return;
+    if (!confirm("Reset training: random weights, statistics, and history?")) return;
     await api.resetBrains();
     chart.update([]);
   });

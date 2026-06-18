@@ -34,7 +34,7 @@ export function buildExperimentProtocol(meta, engine) {
   return {
     exportedAt: new Date().toISOString(),
     project: "TopGun Research",
-    algorithm: "Эволюционные стратегии (элита + кроссовер + гауссова мутация)",
+    algorithm: "Evolution Strategies (elite + crossover + Gaussian mutation)",
     environment: {
       mapSize: MAP_SIZE,
       matchTimeoutSec: MATCH_TIMEOUT,

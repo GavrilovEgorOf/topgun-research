@@ -24,7 +24,7 @@ export function initTrainingChart(canvas) {
     if (!history.length) {
       ctx.fillStyle = "#86868b";
       ctx.font = "12px Inter, -apple-system, sans-serif";
-      ctx.fillText("Сбор данных…", pad.l, h / 2);
+      ctx.fillText("Collecting data…", pad.l, h / 2);
       return;
     }
 
@@ -104,10 +104,10 @@ export function initTrainingChart(canvas) {
 
 export function renderChartLegend(container) {
   container.innerHTML = `
-    <span class="legend-item"><i style="background:${COLORS.blueFitness}"></i>Fitness синий</span>
-    <span class="legend-item"><i style="background:${COLORS.redFitness}"></i>Fitness красный</span>
-    <span class="legend-item"><i style="background:${COLORS.pickup}"></i>Подбор оружия</span>
-    <span class="legend-item"><i style="background:${COLORS.damage}"></i>Средний урон</span>
-    <span class="legend-item"><i style="background:${COLORS.visibleKill}"></i>Видимые убийства</span>
+    <span class="legend-item"><i style="background:${COLORS.blueFitness}"></i>Blue fitness</span>
+    <span class="legend-item"><i style="background:${COLORS.redFitness}"></i>Red fitness</span>
+    <span class="legend-item"><i style="background:${COLORS.pickup}"></i>Weapon pickup</span>
+    <span class="legend-item"><i style="background:${COLORS.damage}"></i>Avg damage</span>
+    <span class="legend-item"><i style="background:${COLORS.visibleKill}"></i>Visible kills</span>
   `;
 }

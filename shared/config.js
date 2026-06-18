@@ -68,12 +68,12 @@ export const ES_MUTATION_DECAY = 0.995;
 export const ES_MIN_MUTATION = 0.03;
 
 export const DRAW_PENALTY = -8;
-/** База штрафа при таймауте; растёт после DRAW_ESCALATE_FROM_SEC */
+/** Draw penalty base at timeout; escalates after DRAW_ESCALATE_FROM_SEC */
 export const DRAW_PENALTY_BASE = -5;
 export const DRAW_ESCALATE_FROM_SEC = 8;
 export const DRAW_ESCALATE_PER_SEC = 0.7;
 
-/** Анти-пассивность: упор в стену, угол, бездействие */
+/** Anti-passivity: wall grind, corner camping, inactivity */
 export const WALL_GRIND_PENALTY = 0.035;
 export const CORNER_CAMP_PENALTY = 0.045;
 export const STAGNATION_PENALTY = 0.025;
@@ -91,15 +91,15 @@ export const DAMAGE_REWARD = 2.5;
 export const SHOOT_THRESHOLD = 0.35;
 export const HISTORY_MAX = 300;
 
-/** Поколений с удвоенным exploration-бонусом после смены правил видимости */
+/** Generations with doubled exploration bonus after visibility rule change */
 export const BLIND_TRAINING_GENS = 10;
 export const BLIND_EXPLORATION_MULT = 2;
 
-/** Автосохранение весов каждые N поколений */
+/** Auto-save weights every N generations */
 export const CHECKPOINT_EVERY_GENS = 25;
 export const CHECKPOINT_MAX = 20;
 
-/** Асимметричная мутация при доминировании одной стороны */
+/** Asymmetric mutation when one side dominates */
 export const DOMINANCE_WIN_THRESHOLD = 0.6;
 export const DOMINANCE_MUTATION_BOOST = 1.5;
 export const DOMINANCE_MUTATION_CAP = 0.22;

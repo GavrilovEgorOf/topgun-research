@@ -165,7 +165,7 @@ async function main() {
           const result = engine.compareCheckpoints(Number(genA), Number(genB));
           if (!result) {
             res.writeHead(404, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Чекпоинты не найдены" }));
+            res.end(JSON.stringify({ error: "Checkpoints not found" }));
             return;
           }
           res.writeHead(200, { "Content-Type": "application/json" });
