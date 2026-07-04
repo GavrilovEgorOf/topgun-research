@@ -6,7 +6,7 @@
 
 A procedural 3D combat arena where two neural agents co-evolve via **Evolution Strategies** (no backprop). Includes a Three.js research dashboard, WebSocket live feed, replay system, worker-thread training, and reproducible headless simulation.
 
-**Why it matters:** end-to-end ML research product — deterministic simulator, parallel fitness evaluation, real-time observability, static portfolio demo, CI, and architecture docs. Good fit for ML / fullstack / platform engineering portfolios.
+**Why it matters:** end-to-end ML research — deterministic simulator, parallel fitness evaluation, real-time observability, static GitHub Pages demo, CI, and architecture docs.
 
 ## Demo
 
@@ -77,7 +77,7 @@ npm run export:demo   # writes public/demo/ from data/
 shared/      ← core: physics, observations, neural net, rewards
 server/      ← training, API, persistence
 src/         ← Three.js scene and research panel
-public/demo/ ← static snapshot for portfolio / GitHub Pages
+public/demo/ ← static snapshot for GitHub Pages
 tests/       ← unit tests (node:test)
 ```
 

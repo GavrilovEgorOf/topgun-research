@@ -37,14 +37,14 @@ TopGun Research is a procedural 3D combat arena where two neural agents co-evolv
 | Component | Purpose |
 |-----------|---------|
 | WebSocket training server | Real-time metrics to research dashboard |
-| GitHub Pages demo | Zero-install portfolio demonstration |
+| GitHub Pages demo | Zero-install web demo |
 | Headless simulation | CI-friendly regression runs |
 | Replay export | Shareable battle recordings |
 
 ## Limitations
 
 - ES sample efficiency lower than gradient-based RL on this task at scale
-- 3D rendering is portfolio/demo focused, not production game engine
+- 3D rendering is demo-focused, not a production game engine
 - Research scope: engineering showcase, not peer-reviewed novel algorithm
 
 ## Conclusion
